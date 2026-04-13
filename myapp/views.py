@@ -7,7 +7,7 @@ from django.contrib import messages
 
 from django.contrib.auth.models import User,Group
 
-from myapp.models import booking, complaint, doctor, prescription, schedule
+from myapp.models import booking, complaint, doctor, prescription, schedule, user
 
 # Create your views here.
 
@@ -22,11 +22,11 @@ def login_get(request):
                 print("jajaja")
                 login(request,user)
                 return redirect('/myapp/admin_home_get/')
-            elif user.groups.filter("name=doctor").exists():
+            elif user.groups.filter(name="doctor").exists():
                 print("jajaja")
                 login(request,user)
                 return redirect('/myapp/doctor_home_get/')
-            elif user.groups.filter("name=user").exists():
+            elif user.groups.filter(name="user").exists():
                 print("jajaja")
                 login(request,user)
                 return redirect('/myapp/user_home_get/')
@@ -136,23 +136,33 @@ def admin_editdoctor_get(request,id):
     return render(request,"admin/editdoctor.html",{'data':ob})
 
 def admin_editschedule_get(request):
+    ob=doctor.objects.get(id=id)
+
     if request.method == 'POST':
         date=request.POST['date']
         fromtime=request.POST['fromtime']
-        name=request.POST['totime']
+        totime=request.POST['totime']
 
-        return HttpResponse('ok')
+        ob.date=date
+        ob.fromtime=fromtime
+        ob.totime=totime
+        ob.save()
 
+        return redirect('/myapp/admin_viewschedule_get//')
 
-    return render(request,"admin/editschedule.html")
+    return render(request,"admin/editschedule.html",{'data':ob})
 
 def admin_sendreply_get(request):
+    ob=doctor.objects.get(id=id)
     if request.method == 'POST':
         reply=request.POST['reply']
 
-        return HttpResponse('ok')
+        ob.reply=reply
+        ob.save()
 
-    return render(request,"admin/sendreply.html")
+        return redirect('/myapp/admin_viewcomplaint_get//')
+
+    return render(request,"admin/sendreply.html",{'data':ob})
 
 def admin_verifybooking_get(request):
     data=booking.objects.all()
@@ -175,14 +185,17 @@ def admin_viewschedule_get(request):
 # ============================= doctor =================
 
 def doctor_addprescription_get(request):
+    ob=doctor.objects.get(id=id)
+    
     if request.method == 'POST':
-        prescription=request.POST['prescription']
+        priscription=request.POST['priscription']
         findings=request.POST['findings']
 
-        return HttpResponse('ok')
-
+        ob.priscription=priscription
+        ob.findings=findings
+        ob.save()
         
-
+        return redirect('/myapp/doctor_viewprescription_get//')
     return render(request,"doctor/addprescription.html")
 
 def doctor_home_get(request):
@@ -201,12 +214,13 @@ def doctor_viewschedule_get(request):
     return render(request,"doctor/viewschedule.html",{'data':data})
 
 
-# ================ user ================ 
+# ================ user ===============================================================================================
 
 def user_home_get(request):
     return render(request,"user/user.html")
 
 def user_userregister_get(request):
+
     if request.method == 'POST':
         name=request.POST['name']
         phone=request.POST['phone']
@@ -217,11 +231,23 @@ def user_userregister_get(request):
         district=request.POST['district']
         username=request.POST['username']
         password=request.POST['password']
+        
+        lg=User.objects.create_user(username=username,password=password)
+        lg.groups.add(Group.objects.get(name="user"))  
+        lg.save() 
 
-        return HttpResponse('ok')
-    
-
-
+        ob=user()
+        ob.name=name
+        ob.phone=phone
+        ob.gender=gender
+        ob.dob=dob
+        ob.place=place
+        ob.pin=pin
+        ob.district=district
+        ob.LOGIN=lg
+        ob.save()
+        
+        return redirect('/myapp/login_get/')
     return render(request,"user/userregister.html")
 
 def user_viewbookingsstatus_get(request):
