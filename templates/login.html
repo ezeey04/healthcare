@@ -1,0 +1,447 @@
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <STYLE>
+        .user{
+            margin-top: 250px;
+            margin-left: 600px;
+            margin-right: 700px;
+        }
+        .pass{
+            margin-left: 600px; 
+            margin-right: 700px ;  
+        }
+        .Remember{
+            margin-left: 600px;
+            margin-top: 10px;
+        }
+        .btn{
+            margin-left: 700px;
+            margin-top: 10px;
+        }
+    </STYLE>
+    <form method="post"> {% csrf_token %}
+
+  <div class="user">
+    <label for="exampleInputEmail1">User Name</label>
+    <input type="text" class="form-control" id="username" name="username"  aria-describedby="emailHelp">
+    <small id="emailHelp" class="form-text text-muted"></small>
+  </div>
+  <div class="pass">
+    <label  for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+  </div>
+  <div class="Remember">
+    <input  type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — MediPortal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0f12;
+            --surface: #141619;
+            --surface2: #1c1f24;
+            --border: rgba(255,255,255,0.07);
+            --border-hover: rgba(255,255,255,0.14);
+            --accent: #00e5a0;
+            --accent-dim: rgba(0,229,160,0.1);
+            --accent-glow: rgba(0,229,160,0.25);
+            --text: #f0f2f5;
+            --muted: #6b7280;
+            --muted2: #9ca3af;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Epilogue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+        }
+        .bg-glow-1 {
+            position: fixed;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,229,160,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -250px; left: -150px;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,120,255,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .corner-mark {
+            position: fixed;
+            width: 60px; height: 60px;
+            pointer-events: none;
+        }
+        .corner-mark.tl { top: 24px; left: 24px; border-top: 1.5px solid rgba(0,229,160,0.3); border-left: 1.5px solid rgba(0,229,160,0.3); }
+        .corner-mark.tr { top: 24px; right: 24px; border-top: 1.5px solid rgba(0,229,160,0.3); border-right: 1.5px solid rgba(0,229,160,0.3); }
+        .corner-mark.bl { bottom: 24px; left: 24px; border-bottom: 1.5px solid rgba(0,229,160,0.3); border-left: 1.5px solid rgba(0,229,160,0.3); }
+        .corner-mark.br { bottom: 24px; right: 24px; border-bottom: 1.5px solid rgba(0,229,160,0.3); border-right: 1.5px solid rgba(0,229,160,0.3); }
+
+        .sys-label {
+            position: fixed;
+            top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Syne', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            white-space: nowrap;
+        }
+        .sys-label::before, .sys-label::after {
+            content: '';
+            width: 24px; height: 1px;
+            background: var(--border-hover);
+        }
+        .status-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent-glow);
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .login-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 440px;
+            padding: 1.5rem;
+            animation: fadeUp 0.5s ease both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.75rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,229,160,0.4), transparent);
+        }
+
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 2.25rem;
+        }
+        .brand-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(0,229,160,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+        .brand-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .brand-name span { color: var(--accent); }
+
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+        .card-sub {
+            font-size: 0.875rem;
+            color: var(--muted2);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .role-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.3rem;
+            margin-bottom: 1.75rem;
+        }
+        .role-tab {
+            flex: 1;
+            padding: 0.5rem;
+            text-align: center;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-radius: 7px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: all 0.2s;
+        }
+        .role-tab.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid rgba(0,229,160,0.2);
+        }
+        .role-tab:not(.active):hover { color: var(--muted2); background: rgba(255,255,255,0.03); }
+
+        .form-group { margin-bottom: 1.1rem; }
+        .form-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--muted2);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.45rem;
+            font-family: 'Syne', sans-serif;
+        }
+        .input-wrap { position: relative; }
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 0.85rem;
+            pointer-events: none;
+            transition: color 0.2s;
+            font-family: monospace;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.75rem;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-family: 'Epilogue', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .form-control::placeholder { color: #3f444d; }
+        .form-control:focus {
+            border-color: rgba(0,229,160,0.4);
+            box-shadow: 0 0 0 3px rgba(0,229,160,0.08);
+            background: #1a1e24;
+        }
+        .input-wrap:focus-within .input-icon { color: var(--accent); }
+
+        .form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1.25rem 0 1.75rem;
+        }
+        .remember-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .remember-wrap input[type="checkbox"] {
+            width: 15px; height: 15px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+        .remember-wrap label {
+            font-size: 0.82rem;
+            color: var(--muted2);
+            cursor: pointer;
+            font-weight: 300;
+        }
+        .forgot-link {
+            font-size: 0.82rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+        .forgot-link:hover { opacity: 1; }
+
+        .btn-login {
+            width: 100%;
+            background: var(--accent);
+            color: #0a0c0e;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 10px;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-login:hover {
+            box-shadow: 0 0 28px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+        .btn-login:active { transform: scale(0.99); box-shadow: none; }
+
+        .card-bottom {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .card-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .card-bottom a:hover { text-decoration: underline; }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 2rem 1.5rem; }
+            .sys-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+<div class="corner-mark tl"></div>
+<div class="corner-mark tr"></div>
+<div class="corner-mark bl"></div>
+<div class="corner-mark br"></div>
+
+<div class="sys-label">
+    <div class="status-dot"></div>
+    Secure Portal
+    <div class="status-dot"></div>
+</div>
+
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <div class="brand-row">
+            <div class="brand-icon">✦</div>
+            <div class="brand-name">Medi<span>Portal</span></div>
+        </div>
+
+        <h1 class="card-title">Sign in</h1>
+        <p class="card-sub">Access your clinical dashboard securely.</p>
+
+        <div class="role-tabs">
+            <button class="role-tab active" type="button"
+                onclick="this.parentElement.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active')">Doctor</button>
+            <button class="role-tab" type="button"
+                onclick="this.parentElement.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active')">Admin</button>
+            <button class="role-tab" type="button"
+                onclick="this.parentElement.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active')">Patient</button>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label" for="username">Username</label>
+                <div class="input-wrap">
+                    <span class="input-icon">@</span>
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder="your.username" autocomplete="username">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-wrap">
+                    <span class="input-icon">&#9679;</span>
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="••••••••" autocomplete="current-password">
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <div class="remember-wrap">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Keep me signed in</label>
+                </div>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-login">Sign In &rarr;</button>
+        </form>
+
+        <div class="card-bottom">
+            Need access? <a href="#">Contact your administrator</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

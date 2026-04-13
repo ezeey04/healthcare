@@ -1,0 +1,180 @@
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View Doctor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+  <form method="post"> {% csrf_token %}
+
+      <div class="bd-example-snippet bd-code-snippet"> <div class="bd-example m-0 border-0"> <table class="table table-bordered border-primary">
+  <thead>
+    <tr>
+      <th scope="col">Si No</th>
+      <th scope="col">Doctor Details</th>
+      <th scope="col">Address</th>
+      <th scope="col">Contact Details</th>
+      <th scope="col">Department</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><a href="/myapp/user_viewschedule_get/">Schedules</a> </td>
+    </tr>
+  </tbody>
+</table> 
+</div>
+</form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CareSync | Find Doctors</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+<link rel="stylesheet" href="/static/user_shared.css"/>
+<style>
+.dept-chip { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11.5px; font-weight:600; background:var(--teal-pale); color:var(--teal); }
+.doctor-cell { display:flex; align-items:center; gap:10px; }
+.doc-avatar { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--teal-light),var(--teal)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; flex-shrink:0; }
+.doc-name strong { font-size:13.5px; font-weight:600; color:var(--navy); display:block; }
+.doc-name span { font-size:12px; color:var(--muted); }
+.addr-cell { font-size:13px; color:var(--muted); max-width:180px; }
+.contact-cell { font-size:13px; }
+.contact-cell p { color:var(--navy); font-weight:500; }
+.contact-cell span { color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<div id="sidebar-root"></div>
+<main class="main">
+
+  <div class="page-header">
+    <div>
+      <h1>Find a Doctor</h1>
+      <p>Browse available specialists and book an appointment</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-toolbar">
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Search by name or department…"/>
+      </div>
+      <select class="form-control" style="width:auto;padding:9px 34px 9px 12px;font-size:13px;">
+        <option>All Departments</option>
+        <option>Cardiology</option><option>Orthopaedics</option>
+        <option>Neurology</option><option>Paediatrics</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Schedule</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="si-no">01</td>
+            <td>
+              <div class="doctor-cell">
+                <div class="doc-avatar">MN</div>
+                <div class="doc-name">
+                  <strong>Dr. Meera Nair</strong>
+                  <span>MD, DM (Cardio)</span>
+                </div>
+              </div>
+            </td>
+            <td><span class="dept-chip">Cardiology</span></td>
+            <td class="addr-cell">42, MG Road, Palayam<br>Thiruvananthapuram</td>
+            <td class="contact-cell">
+              <p>+91 98765 43210</p>
+              <span>meera@caresync.in</span>
+            </td>
+            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
+          </tr>
+          <tr>
+            <td class="si-no">02</td>
+            <td>
+              <div class="doctor-cell">
+                <div class="doc-avatar">SP</div>
+                <div class="doc-name">
+                  <strong>Dr. Suresh Pillai</strong>
+                  <span>MS, MCh</span>
+                </div>
+              </div>
+            </td>
+            <td><span class="dept-chip">Orthopaedics</span></td>
+            <td class="addr-cell">12, Statue Road<br>Kozhikode</td>
+            <td class="contact-cell">
+              <p>+91 91234 56789</p>
+              <span>suresh@caresync.in</span>
+            </td>
+            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
+          </tr>
+          <tr>
+            <td class="si-no">03</td>
+            <td>
+              <div class="doctor-cell">
+                <div class="doc-avatar">AR</div>
+                <div class="doc-name">
+                  <strong>Dr. Anjali Rao</strong>
+                  <span>DM (Neuro)</span>
+                </div>
+              </div>
+            </td>
+            <td><span class="dept-chip">Neurology</span></td>
+            <td class="addr-cell">7, Beach Road<br>Kochi</td>
+            <td class="contact-cell">
+              <p>+91 99887 76655</p>
+              <span>anjali@caresync.in</span>
+            </td>
+            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
+          </tr>
+          <tr>
+            <td class="si-no">04</td>
+            <td>
+              <div class="doctor-cell">
+                <div class="doc-avatar">VK</div>
+                <div class="doc-name">
+                  <strong>Dr. Vivek Kumar</strong>
+                  <span>MD, DCH</span>
+                </div>
+              </div>
+            </td>
+            <td><span class="dept-chip">Paediatrics</span></td>
+            <td class="addr-cell">3, Civil Lines<br>Thrissur</td>
+            <td class="contact-cell">
+              <p>+91 90000 11223</p>
+              <span>vivek@caresync.in</span>
+            </td>
+            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+<script src="user_sidebar.js"></script>
+<script>document.getElementById('sidebar-root').innerHTML = renderUserSidebar('viewdoctor');</script>
+</body>
+</html>

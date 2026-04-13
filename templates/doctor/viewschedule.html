@@ -1,0 +1,343 @@
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Schedule</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+  <form method="post"> {% csrf_token %}
+
+    <div class="bd-example-snippet bd-code-snippet"> <div class="bd-example m-0 border-0"> <table class="table table-bordered border-primary">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">From-Time</th>
+      <th scope="col">To-Time</th>
+      <th scope="col">Bookings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td><a href="">Bookings</a> 
+    </tr>
+  </tbody>
+</table> 
+</form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Schedule</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a5c;
+            --primary-light: #2a5298;
+            --accent: #17a589;
+            --accent-light: #e8f8f5;
+            --bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text: #1a2533;
+            --muted: #6b7a8d;
+            --border: #d8e2ec;
+            --shadow: 0 4px 24px rgba(26,58,92,0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        nav {
+            background: var(--primary);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            box-shadow: 0 2px 12px rgba(26,58,92,0.18);
+        }
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.25rem;
+            text-decoration: none;
+        }
+        .nav-brand span { color: #5dade2; }
+        .nav-links { display: flex; gap: 0.25rem; }
+        .nav-links a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            padding: 0.45rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+        }
+        .page-wrapper { max-width: 900px; margin: 2.5rem auto; padding: 0 1.5rem; }
+        .page-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .page-header p {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        .month-nav button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 1rem;
+            padding: 0 0.2rem;
+            line-height: 1;
+        }
+        .month-nav button:hover { color: var(--primary); }
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead {
+            background: #f7fafc;
+            border-bottom: 1.5px solid var(--border);
+        }
+        thead th {
+            padding: 0.85rem 1.25rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: #f7fafc; }
+        tbody td {
+            padding: 1rem 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text);
+            vertical-align: middle;
+        }
+        .date-cell {
+            display: flex;
+            flex-direction: column;
+        }
+        .date-main { font-weight: 600; color: var(--primary); }
+        .date-day { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+        .time-range {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+        .time-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+        .time-arrow { color: var(--muted); font-size: 0.75rem; }
+        .bookings-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 1rem;
+            background: #eef3f9;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .bookings-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .count-badge {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 20px;
+            padding: 0.1rem 0.5rem;
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+        .bookings-btn:hover .count-badge {
+            background: rgba(255,255,255,0.25);
+        }
+        .today-tag {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.12rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 0.4rem;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#" class="nav-brand">Medi<span>Portal</span></a>
+    <div class="nav-links">
+        <a href="/myapp/doctor_home_get/">Home</a>
+        <a href="/myapp/doctor_viewschedule_get/" class="active">Schedule</a>
+        <a href="/myapp/logout_get/">Log Out</a>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <div class="page-header">
+        <div>
+            <h1>My Schedule</h1>
+            <p>Manage your availability and appointment slots.</p>
+        </div>
+        <div class="month-nav">
+            <button>&lsaquo;</button>
+            January 2025
+            <button>&rsaquo;</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Bookings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- {% for slot in schedule %} -->
+                    <tr>
+                        <td>
+                            <div class="date-cell">
+                                <span class="date-main">Jan 15, 2025 <span class="today-tag">Today</span></span>
+                                <span class="date-day">Wednesday</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="time-range">
+                                <div class="time-dot"></div>
+                                09:00 AM
+                            </div>
+                        </td>
+                        <td>01:00 PM</td>
+                        <td>
+                            <a href="" class="bookings-btn">
+                                View Bookings
+                                <span class="count-badge">4</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="date-cell">
+                                <span class="date-main">Jan 17, 2025</span>
+                                <span class="date-day">Friday</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="time-range">
+                                <div class="time-dot"></div>
+                                02:00 PM
+                            </div>
+                        </td>
+                        <td>06:00 PM</td>
+                        <td>
+                            <a href="" class="bookings-btn">
+                                View Bookings
+                                <span class="count-badge">2</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="date-cell">
+                                <span class="date-main">Jan 20, 2025</span>
+                                <span class="date-day">Monday</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="time-range">
+                                <div class="time-dot"></div>
+                                10:00 AM
+                            </div>
+                        </td>
+                        <td>12:00 PM</td>
+                        <td>
+                            <a href="" class="bookings-btn">
+                                View Bookings
+                                <span class="count-badge">1</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- {% endfor %} -->
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View Bookings Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+  <form method="post"> {% csrf_token %}
+
+     <div class="bd-example-snippet bd-code-snippet"> <div class="bd-example m-0 border-0"> <table class="table table-bordered border-primary">
+  <thead>
+    <tr>
+      <th scope="col">Si No</th>
+      <th scope="col">Date</th>
+      <th scope="col">Schedule Details</th>
+      <th scope="col">Doctor Details</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><a href="">Prescription</a> </td>
+    </tr>
+  </tbody>
+</table> 
+</div>
+</form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html-->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CareSync | My Bookings</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+<link rel="stylesheet" href="/static/user_shared.css"/>
+<style>
+.summary-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px; }
+.summary-card { background:var(--white); border-radius:12px; padding:16px 20px; border:1px solid var(--border); box-shadow:var(--card-shadow); display:flex; align-items:center; gap:14px; }
+.summary-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.summary-card p { font-size:11.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; }
+.summary-card span { font-size:24px; font-weight:700; color:var(--navy); font-family:'Playfair Display',serif; }
+.doc-info { display:flex; flex-direction:column; }
+.doc-info strong { font-size:13.5px; font-weight:600; color:var(--navy); }
+.doc-info span { font-size:12px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div id="sidebar-root"></div>
+<main class="main">
+
+  <div class="page-header">
+    <div>
+      <h1>My Bookings</h1>
+      <p>Track your appointment history and current status</p>
+    </div>
+  </div>
+
+  <div class="summary-strip">
+    <div class="summary-card">
+      <div class="summary-icon" style="background:#fef3cd;color:#856404;"><i class="bi bi-hourglass-split"></i></div>
+      <div><p>Pending</p><span>2</span></div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon" style="background:#e8faf3;color:#0a6640;"><i class="bi bi-check-circle-fill"></i></div>
+      <div><p>Confirmed</p><span>5</span></div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon" style="background:#fdeaea;color:#842029;"><i class="bi bi-x-circle-fill"></i></div>
+      <div><p>Rejected</p><span>1</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div><h3>Booking History</h3><p>All your appointments at a glance</p></div>
+      <div class="table-toolbar" style="border:none;padding:0;">
+        <select class="form-control" style="width:auto;padding:8px 30px 8px 12px;font-size:13px;">
+          <option>All Status</option><option>Pending</option><option>Confirmed</option><option>Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date Booked</th>
+            <th>Schedule</th>
+            <th>Doctor</th>
+            <th>Status</th>
+            <th>Prescription</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="si-no">01</td>
+            <td><strong>02 Apr 2025</strong></td>
+            <td>
+              <div style="display:flex;flex-direction:column;gap:3px;">
+                <span class="time-chip" style="width:fit-content;"><i class="bi bi-clock"></i> 09:00 – 09:30 AM</span>
+                <span style="font-size:12px;color:var(--muted);">01 Apr 2025</span>
+              </div>
+            </td>
+            <td>
+              <div class="doc-info">
+                <strong>Dr. Meera Nair</strong>
+                <span>Cardiology</span>
+              </div>
+            </td>
+            <td><span class="badge badge-active">Confirmed</span></td>
+            <td><a href="user_view_prescription.html" class="action-btn rx"><i class="bi bi-capsule-pill"></i> View Rx</a></td>
+          </tr>
+          <tr>
+            <td class="si-no">02</td>
+            <td><strong>28 Mar 2025</strong></td>
+            <td>
+              <div style="display:flex;flex-direction:column;gap:3px;">
+                <span class="time-chip" style="width:fit-content;"><i class="bi bi-clock"></i> 02:00 – 02:30 PM</span>
+                <span style="font-size:12px;color:var(--muted);">29 Mar 2025</span>
+              </div>
+            </td>
+            <td>
+              <div class="doc-info">
+                <strong>Dr. Suresh Pillai</strong>
+                <span>Orthopaedics</span>
+              </div>
+            </td>
+            <td><span class="badge badge-pending">Pending</span></td>
+            <td><span style="font-size:12px;color:var(--muted);">—</span></td>
+          </tr>
+          <tr>
+            <td class="si-no">03</td>
+            <td><strong>20 Mar 2025</strong></td>
+            <td>
+              <div style="display:flex;flex-direction:column;gap:3px;">
+                <span class="time-chip" style="width:fit-content;"><i class="bi bi-clock"></i> 10:00 – 10:30 AM</span>
+                <span style="font-size:12px;color:var(--muted);">21 Mar 2025</span>
+              </div>
+            </td>
+            <td>
+              <div class="doc-info">
+                <strong>Dr. Anjali Rao</strong>
+                <span>Neurology</span>
+              </div>
+            </td>
+            <td><span class="badge badge-rejected">Rejected</span></td>
+            <td><span style="font-size:12px;color:var(--muted);">—</span></td>
+          </tr>
+          <tr>
+            <td class="si-no">04</td>
+            <td><strong>10 Mar 2025</strong></td>
+            <td>
+              <div style="display:flex;flex-direction:column;gap:3px;">
+                <span class="time-chip" style="width:fit-content;"><i class="bi bi-clock"></i> 09:30 – 10:00 AM</span>
+                <span style="font-size:12px;color:var(--muted);">11 Mar 2025</span>
+              </div>
+            </td>
+            <td>
+              <div class="doc-info">
+                <strong>Dr. Meera Nair</strong>
+                <span>Cardiology</span>
+              </div>
+            </td>
+            <td><span class="badge badge-active">Confirmed</span></td>
+            <td><a href="user_view_prescription.html" class="action-btn rx"><i class="bi bi-capsule-pill"></i> View Rx</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+<script src="user_sidebar.js"></script>
+<script>document.getElementById('sidebar-root').innerHTML = renderUserSidebar('bookings');</script>
+</body>
+</html>

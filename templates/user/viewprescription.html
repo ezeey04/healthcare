@@ -1,0 +1,163 @@
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View Prescription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+  <form method="post"> {% csrf_token %}
+
+      <div class="bd-example-snippet bd-code-snippet"> <div class="bd-example m-0 border-0"> <table class="table table-bordered border-primary">
+  <thead>
+    <tr>
+      <th scope="col">Si No</th>
+      <th scope="col">Date</th>
+      <th scope="col">Prescription</th>
+      <th scope="col">Findings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table> 
+</div>
+</form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CareSync | My Prescriptions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+<link rel="stylesheet" href="/static/user_shared.css"/>
+<style>
+.rx-card {
+  background: var(--white);
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  animation: fadeUp .35s ease both;
+  transition: box-shadow .2s;
+}
+.rx-card:hover { box-shadow: var(--lift); }
+.rx-card-header {
+  padding: 18px 24px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.rx-card-header::after {
+  content: 'Rx';
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 700;
+  color: rgba(255,255,255,.05);
+  position: absolute; right: 20px; top: 8px;
+}
+.rx-header-left { display:flex; align-items:center; gap:12px; }
+.rx-doc-avatar { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--teal-light),var(--teal)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:700; flex-shrink:0; }
+.rx-doc-name p { font-size:14px; font-weight:700; color:#fff; }
+.rx-doc-name span { font-size:11.5px; color:rgba(255,255,255,.45); }
+.rx-date { font-size:12px; color:rgba(255,255,255,.45); display:flex; align-items:center; gap:5px; }
+
+.rx-body { padding: 22px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.rx-section label { font-size:10.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; color:var(--teal); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.rx-section label i { font-size:13px; }
+.rx-content { background: var(--cream); border-radius: 8px; border: 1px solid var(--border); padding: 14px 16px; font-size:13.5px; color:var(--text); line-height:1.75; min-height:80px; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.rx-card:nth-child(1) { animation-delay:.04s; }
+.rx-card:nth-child(2) { animation-delay:.1s; }
+</style>
+</head>
+<body>
+<div id="sidebar-root"></div>
+<main class="main">
+
+  <div class="page-header">
+    <div>
+      <h1>My Prescriptions</h1>
+      <p>Prescriptions issued by your doctors after each visit</p>
+    </div>
+    <a href="user_view_bookings.html" class="action-btn back"><i class="bi bi-arrow-left"></i> My Bookings</a>
+  </div>
+
+  <!-- Prescription Card 1 -->
+  <div class="rx-card">
+    <div class="rx-card-header">
+      <div class="rx-header-left">
+        <div class="rx-doc-avatar">MN</div>
+        <div class="rx-doc-name">
+          <p>Dr. Meera Nair</p>
+          <span>Cardiology · Booking #BKG-2041</span>
+        </div>
+      </div>
+      <div class="rx-date"><i class="bi bi-calendar3"></i> 02 Apr 2025</div>
+    </div>
+    <div class="rx-body">
+      <div class="rx-section">
+        <label><i class="bi bi-capsule-pill"></i> Prescription</label>
+        <div class="rx-content">
+          Tab. Paracetamol 500mg — twice daily after food for 5 days<br>
+          Tab. Pantoprazole 40mg — once daily before breakfast<br>
+          Syp. Benadryl 10ml — at night for 3 days
+        </div>
+      </div>
+      <div class="rx-section">
+        <label><i class="bi bi-clipboard2-pulse"></i> Doctor's Findings</label>
+        <div class="rx-content">
+          Patient presents with mild fever (99.4°F), sore throat, and fatigue. No signs of bacterial infection. Advised rest, hydration, and a follow-up in 5 days if symptoms persist.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescription Card 2 -->
+  <div class="rx-card">
+    <div class="rx-card-header">
+      <div class="rx-header-left">
+        <div class="rx-doc-avatar">MN</div>
+        <div class="rx-doc-name">
+          <p>Dr. Meera Nair</p>
+          <span>Cardiology · Booking #BKG-1887</span>
+        </div>
+      </div>
+      <div class="rx-date"><i class="bi bi-calendar3"></i> 10 Mar 2025</div>
+    </div>
+    <div class="rx-body">
+      <div class="rx-section">
+        <label><i class="bi bi-capsule-pill"></i> Prescription</label>
+        <div class="rx-content">
+          Tab. Amlodipine 5mg — once daily in the morning<br>
+          Tab. Aspirin 75mg — once daily after food
+        </div>
+      </div>
+      <div class="rx-section">
+        <label><i class="bi bi-clipboard2-pulse"></i> Doctor's Findings</label>
+        <div class="rx-content">
+          BP: 138/88 mmHg. Mild hypertension noted. ECG within normal limits. Advised dietary modification, low sodium intake, and regular walking. Follow-up in 4 weeks.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+<script src="user_sidebar.js"></script>
+<script>document.getElementById('sidebar-root').innerHTML = renderUserSidebar('prescription');</script>
+</body>
+</html>
+
+
+
+ 

@@ -1,0 +1,354 @@
+<!--
+
+DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+        .name{
+            margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 30px;
+            color:blueviolet;
+        }
+        .phone{
+            margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .gender{
+            margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .dob{
+            margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .place{
+            margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .pin{
+             margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .district{
+             margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .username{
+             margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .password{
+             margin-left: 50px;
+            margin-right: 1000px;
+            margin-top: 5px;
+            color: blueviolet;
+        }
+        .btn{
+            margin-top: 20px;
+            margin-left: 100px;
+        }
+    </style>
+<form method="post"> {% csrf_token %}
+    <div class="name">
+      <label for="validationTooltip01">Name</label>
+      <input type="text" class="form-control" name="name" id="validationTooltip01"required>
+    </div>
+    <div class="phone">
+      <label for="validationTooltip02">Phone</label>
+      <input type="number" class="form-control" name="phone" id="validationTooltip02"required>
+    </div>   
+     <div class="gender">
+      <label for="validationTooltip02">Gender</label>
+      <input type="text" class="form-control"name="gender" id="validationTooltip02"required>
+    </div>
+     <div class="dob">
+      <label for="validationTooltip02">DOB</label>
+      <input type="date" class="form-control" name="dob" id="validationTooltip02"required>
+    </div>
+     <div class="place">
+      <label for="validationTooltip02">Place</label>
+      <input type="text" class="form-control" name="place" id="validationTooltip02"required>
+    </div>
+       <div class="pin">
+      <label for="validationTooltip02">Pin</label>
+      <input type="number" class="form-control" name="pin" id="validationTooltip02"required>
+    </div>
+     <div class="district">
+      <label for="validationTooltip02">District</label>
+      <input type="text" class="form-control" name="district" id="validationTooltip02"required>
+    </div>
+  <div class="username">
+      <label for="validationTooltipUsername">Username</label>
+      <div class="input-group">
+          <span class="input-group-text" name="username" id="validationTooltipUsernamePrepend">@</span>
+        </div>
+        <input type="text" class="form-control" id="validationTooltipUsername" aria-describedby="validationTooltipUsernamePrepend" required>
+        </div>
+         <div class="password">
+      <label for="validationTooltip02">Password</label>
+      <input type="text" class="form-control" name="password" id="validationTooltip02"required>
+    </div>
+  <button class="btn btn-primary" type="submit">Register</button>
+ <a href="">Already Registerd Login</a> 
+</form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CareSync | Patient Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+<style>
+:root {
+  --teal: #0a7c6e; --teal-light: #0e9e8d; --teal-pale: #e6f7f5; --teal-mid: #b2e4df;
+  --navy: #0d2137; --navy-soft: #1a3350; --gold: #e8a84c;
+  --cream: #f5f7f6; --white: #ffffff; --text: #1a2e27; --muted: #5e7a72;
+  --border: #d8e8e5; --red: #e05252; --green: #2ebc8a;
+  --card-shadow: 0 4px 24px rgba(10,124,110,.09); --r: 16px; --r-sm: 8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  background: var(--cream);
+  display: flex;
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  width: 420px; flex-shrink: 0;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-soft) 50%, #0a3d55 100%);
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 44px;
+  overflow: hidden;
+}
+.left-panel::before {
+  content: '';
+  position: absolute; right: -60px; top: -60px;
+  width: 280px; height: 280px; border-radius: 50%;
+  background: rgba(10,124,110,.15);
+}
+.left-panel::after {
+  content: '';
+  position: absolute; left: -40px; bottom: -40px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(232,168,76,.09);
+}
+.lp-brand { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+.lp-brand-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--teal-light), var(--teal)); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.lp-brand-icon i { font-size: 21px; color: #fff; }
+.lp-brand-text h2 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -.3px; }
+.lp-brand-text span { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.35); letter-spacing: 1.2px; text-transform: uppercase; }
+.lp-content { position: relative; z-index: 1; }
+.lp-content .tag { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal-light); margin-bottom: 14px; }
+.lp-content h1 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: #fff; line-height: 1.2; letter-spacing: -.5px; margin-bottom: 16px; }
+.lp-content p { font-size: 14px; color: rgba(255,255,255,.5); line-height: 1.75; margin-bottom: 32px; }
+.lp-features { display: flex; flex-direction: column; gap: 14px; }
+.lp-feature { display: flex; align-items: center; gap: 12px; }
+.lp-feature .icon-wrap { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.07); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.lp-feature .icon-wrap i { font-size: 16px; color: var(--teal-light); }
+.lp-feature p { font-size: 13px; color: rgba(255,255,255,.6); font-weight: 500; }
+.lp-footer { position: relative; z-index: 1; }
+.lp-footer p { font-size: 12px; color: rgba(255,255,255,.2); }
+
+/* ── RIGHT PANEL ── */
+.right-panel {
+  flex: 1;
+  padding: 48px 56px;
+  overflow-y: auto;
+}
+.rp-header { margin-bottom: 32px; }
+.rp-header h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--navy); letter-spacing: -.4px; margin-bottom: 6px; }
+.rp-header p { font-size: 14px; color: var(--muted); }
+
+.form-divider { font-size: 10.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); padding: 18px 0 10px; display: flex; align-items: center; gap: 10px; }
+.form-divider::after { content: ''; flex: 1; height: 1px; background: var(--teal-mid); opacity: .5; }
+
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 2px; }
+.form-group label { font-size: 12.5px; font-weight: 600; color: var(--navy); letter-spacing: .2px; }
+.form-group label .req { color: var(--teal); margin-left: 2px; }
+.form-control { width: 100%; padding: 11px 14px; background: var(--cream); border: 1.5px solid var(--border); border-radius: var(--r-sm); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--text); transition: all .2s; outline: none; }
+.form-control:focus { border-color: var(--teal); background: #fff; box-shadow: 0 0 0 3px rgba(10,124,110,.1); }
+.form-control::placeholder { color: #aac0bc; }
+.input-wrap { position: relative; }
+.input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; font-weight: 600; }
+.input-wrap .form-control { padding-left: 30px; }
+.input-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 15px; pointer-events: none; }
+select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%235e7a72' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+
+.btn-register { width: 100%; background: linear-gradient(135deg, var(--teal-light), var(--teal)); color: #fff; border: none; padding: 14px; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 9px; box-shadow: 0 4px 14px rgba(10,124,110,.3); margin-top: 6px; }
+.btn-register:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(10,124,110,.4); }
+
+.login-link { text-align: center; margin-top: 18px; font-size: 13.5px; color: var(--muted); }
+.login-link a { color: var(--teal); font-weight: 600; text-decoration: none; }
+.login-link a:hover { text-decoration: underline; }
+
+.form-section { background: #fff; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--card-shadow); padding: 28px 30px; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.right-panel { animation: fadeUp .35s ease both; }
+
+@media (max-width: 900px) {
+  .left-panel { display: none; }
+  .right-panel { padding: 28px 20px; }
+  .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="left-panel">
+  <div class="lp-brand">
+    <div class="lp-brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+    <div class="lp-brand-text">
+      <h2>CareSync</h2>
+      <span>Patient Portal</span>
+    </div>
+  </div>
+
+  <div class="lp-content">
+    <div class="tag">New Patient Registration</div>
+    <h1>Your Health,<br>Our Priority</h1>
+    <p>Join CareSync to book appointments with top specialists, track your prescriptions, and manage your healthcare — all in one place.</p>
+    <div class="lp-features">
+      <div class="lp-feature">
+        <div class="icon-wrap"><i class="bi bi-calendar-check"></i></div>
+        <p>Easy online appointment booking</p>
+      </div>
+      <div class="lp-feature">
+        <div class="icon-wrap"><i class="bi bi-capsule-pill"></i></div>
+        <p>Access prescriptions anytime</p>
+      </div>
+      <div class="lp-feature">
+        <div class="icon-wrap"><i class="bi bi-shield-check"></i></div>
+        <p>Secure & private health records</p>
+      </div>
+      <div class="lp-feature">
+        <div class="icon-wrap"><i class="bi bi-people"></i></div>
+        <p>Connect with certified specialists</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-footer"><p>&copy; 2025 CareSync. All rights reserved.</p></div>
+</div>
+
+<!-- RIGHT FORM PANEL -->
+<div class="right-panel">
+  <div class="rp-header">
+    <h2>Create Your Account</h2>
+    <p>Fill in the details below to register as a patient on CareSync</p>
+  </div>
+
+  <div class="form-section">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="form-divider">Personal Information</div>
+      <div class="form-grid-2" style="margin-bottom:18px;">
+        <div class="form-group">
+          <label>Full Name <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="text" class="form-control" name="name" placeholder="e.g. Rahul Joshi" required/>
+            <i class="bi bi-person input-icon"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone Number <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="tel" class="form-control" name="phone" placeholder="+91 XXXXX XXXXX" required/>
+            <i class="bi bi-telephone input-icon"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Gender <span class="req">*</span></label>
+          <select class="form-control" name="gender" required>
+            <option value="" disabled selected>Select gender</option>
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="date" class="form-control" name="dob" required/>
+            <i class="bi bi-calendar3 input-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider">Address</div>
+      <div class="form-grid-3" style="margin-bottom:18px;">
+        <div class="form-group" style="grid-column:1/3;">
+          <label>Place / Street <span class="req">*</span></label>
+          <input type="text" class="form-control" name="place" placeholder="Street / locality" required/>
+        </div>
+        <div class="form-group">
+          <label>PIN Code <span class="req">*</span></label>
+          <input type="number" class="form-control" name="pin" placeholder="6-digit PIN" required/>
+        </div>
+        <div class="form-group" style="grid-column:1/3;">
+          <label>District <span class="req">*</span></label>
+          <input type="text" class="form-control" name="district" placeholder="District" required/>
+        </div>
+      </div>
+
+      <div class="form-divider">Account Credentials</div>
+      <div class="form-grid-2" style="margin-bottom:24px;">
+        <div class="form-group">
+          <label>Username <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">@</span>
+            <input type="text" class="form-control" name="username" placeholder="your_username" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Password <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="password" class="form-control" name="password" placeholder="Strong password" required/>
+            <i class="bi bi-lock input-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-register">
+        <i class="bi bi-person-check-fill"></i> Create Account
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already registered? <a href="/myapp/user_login_get/">Sign in here</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

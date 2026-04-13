@@ -1,0 +1,291 @@
+    <!--DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Prescription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+        .prescription{
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 1000px;
+            color: black;
+            background-color: darkolivegreen;
+        }
+        .findings{
+            margin-top: 10px;
+            margin-left: 20px;
+            margin-right: 1000px;
+            color: black;
+            background-color: darkolivegreen;
+        }
+        .add{
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+    </style>
+<form method="post"> {% csrf_token %}
+
+  <div class="prescription">
+    <label for="date" class="form-label">Prescription: </label>
+    <input type="text   " class="form-control" name="prescription" id="inputEmail4">
+  </div> 
+  <div class="findings">
+    <label for="inputPassword4" class="form-label">Findings: </label>
+    <input type="text" class="form-control" name="findings" id="inputPassword4"> 
+  <div class="add">
+    <button type="submit" class="btn btn-dark">add</button>
+  </div>
+</form>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Prescription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a5c;
+            --primary-light: #2a5298;
+            --accent: #17a589;
+            --accent-light: #e8f8f5;
+            --bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text: #1a2533;
+            --muted: #6b7a8d;
+            --border: #d8e2ec;
+            --danger: #e74c3c;
+            --shadow: 0 4px 24px rgba(26,58,92,0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        nav {
+            background: var(--primary);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            box-shadow: 0 2px 12px rgba(26,58,92,0.18);
+        }
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.25rem;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+        }
+        .nav-brand span {
+            color: #5dade2;
+        }
+        .nav-links { display: flex; gap: 0.25rem; }
+        .nav-links a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            padding: 0.45rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+        }
+        .page-wrapper {
+            max-width: 680px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .page-header p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 0.35rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: #fafcff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(23,165,137,0.12);
+            background: #fff;
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 1.5rem 0;
+        }
+        .btn-submit {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-submit:hover { background: var(--primary-light); }
+        .btn-submit:active { transform: scale(0.98); }
+        .btn-secondary {
+            background: transparent;
+            color: var(--muted);
+            border: 1.5px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            border-color: var(--muted);
+            color: var(--text);
+        }
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            margin-top: 0.5rem;
+        }
+        .patient-badge {
+            background: var(--accent-light);
+            border: 1px solid rgba(23,165,137,0.2);
+            border-radius: 10px;
+            padding: 0.85rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.75rem;
+        }
+        .patient-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+        .patient-info small {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        .patient-info strong {
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#" class="nav-brand">Medi<span>Portal</span></a>
+    <div class="nav-links">
+        <a href="/myapp/doctor_home_get/" class="active">Home</a>
+        <a href="/myapp/doctor_viewschedule_get/">Schedule</a>
+        <a href="/myapp/logout_get/">Log Out</a>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <div class="page-header">
+        <h1>Add Prescription</h1>
+        <p>Enter prescription details and clinical findings for the patient's visit.</p>
+    </div>
+
+    <div class="card">
+        <div class="patient-badge">
+            <div class="patient-avatar">PT</div>
+            <div class="patient-info">
+                <strong>Patient Name</strong>
+                <small>Appointment — Today</small>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label" for="prescription">Prescription</label>
+                <textarea class="form-control" name="prescription" id="prescription" placeholder="Enter medication name, dosage, and duration..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="findings">Clinical Findings</label>
+                <textarea class="form-control" name="findings" id="findings" placeholder="Record your observations and examination findings..."></textarea>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-secondary">Cancel</button>
+                <button type="submit" class="btn-submit">Save Prescription</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

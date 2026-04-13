@@ -1,0 +1,327 @@
+<!--DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Doctor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+    <form method="post"> {% csrf_token %}
+
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"> <a href="/"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"> <svg
+                    class="bi me-2" width="0" height="0" aria-hidden="true">
+                    <use xlink:href="#bootstrap"></use>
+                </svg> <span class="fs-4">Doctor Home Page</span> </a>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="/myapp/doctor_home_get/" class="nav-link active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="/myapp/doctor_viewschedule_get/" class="nav-link">View Schedule</a></li>
+                <li class="nav-item"><a href="/myapp/logout_get/" class="nav-link">Log Out</a></li>
+            </ul>
+        </header>
+    </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+</html-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a5c;
+            --primary-light: #2a5298;
+            --accent: #17a589;
+            --accent-light: #e8f8f5;
+            --bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text: #1a2533;
+            --muted: #6b7a8d;
+            --border: #d8e2ec;
+            --shadow: 0 4px 24px rgba(26,58,92,0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        nav {
+            background: var(--primary);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            box-shadow: 0 2px 12px rgba(26,58,92,0.18);
+        }
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.25rem;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+        }
+        .nav-brand span { color: #5dade2; }
+        .nav-links { display: flex; gap: 0.25rem; }
+        .nav-links a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            padding: 0.45rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+        }
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e4d7b 60%, #1a6b8a 100%);
+            padding: 4rem 2rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -40px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.03);
+        }
+        .hero-content { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+        .hero-greeting {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.25rem;
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .hero-sub {
+            color: rgba(255,255,255,0.65);
+            font-size: 1rem;
+        }
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .stat-pill {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 0.9rem 1.4rem;
+            min-width: 140px;
+        }
+        .stat-pill .val {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1;
+        }
+        .stat-pill .lbl {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.55);
+            margin-top: 0.25rem;
+        }
+        .main { max-width: 900px; margin: -2rem auto 3rem; padding: 0 1.5rem; position: relative; z-index: 2; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(26,58,92,0.13);
+        }
+        .card-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        .card-icon.teal { background: var(--accent-light); }
+        .card-icon.blue { background: #e8f0fe; }
+        .card-icon.amber { background: #fef9e7; }
+        .card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        .card p {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            font-weight: 500;
+        }
+        .appointment-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .appt-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .appt-time {
+            font-size: 0.8rem;
+            color: var(--muted);
+            min-width: 70px;
+            font-weight: 500;
+        }
+        .appt-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .appt-name { font-weight: 500; font-size: 0.9rem; }
+        .appt-type { font-size: 0.78rem; color: var(--muted); }
+        .badge {
+            margin-left: auto;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .badge-pending { background: #fef9e7; color: #b7950b; }
+        .badge-done { background: var(--accent-light); color: #0e8a72; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#" class="nav-brand">Medi<span>Portal</span></a>
+    <div class="nav-links">
+        <a href="/myapp/doctor_home_get/" class="active">Home</a>
+        <a href="/myapp/doctor_viewschedule_get/">Schedule</a>
+        <a href="/myapp/logout_get/">Log Out</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="hero-content">
+        <div class="hero-greeting">Good morning</div>
+        <h1 class="hero-title">Welcome, Dr. Smith</h1>
+        <p class="hero-sub">Here's your overview for today.</p>
+        <div class="stats-row">
+            <div class="stat-pill">
+                <div class="val">8</div>
+                <div class="lbl">Appointments today</div>
+            </div>
+            <div class="stat-pill">
+                <div class="val">3</div>
+                <div class="lbl">Pending reviews</div>
+            </div>
+            <div class="stat-pill">
+                <div class="val">12</div>
+                <div class="lbl">This week</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="grid">
+        <a href="/myapp/doctor_viewschedule_get/" class="card">
+            <div class="card-icon teal">📅</div>
+            <h3>View Schedule</h3>
+            <p>Check your upcoming appointments and available time slots.</p>
+        </a>
+        <a href="#" class="card">
+            <div class="card-icon blue">📋</div>
+            <h3>Prescriptions</h3>
+            <p>Manage and review all patient prescriptions and findings.</p>
+        </a>
+        <a href="#" class="card">
+            <div class="card-icon amber">👥</div>
+            <h3>Patients</h3>
+            <p>View your full patient list and medical histories.</p>
+        </a>
+    </div>
+
+    <div class="section-title">Today's Appointments</div>
+    <div class="appointment-list">
+        <div class="appt-card">
+            <div class="appt-time">09:00 AM</div>
+            <div class="appt-avatar">AK</div>
+            <div>
+                <div class="appt-name">Patient Name</div>
+                <div class="appt-type">General Consultation</div>
+            </div>
+            <span class="badge badge-pending">Pending</span>
+        </div>
+        <div class="appt-card">
+            <div class="appt-time">10:30 AM</div>
+            <div class="appt-avatar">RJ</div>
+            <div>
+                <div class="appt-name">Patient Name</div>
+                <div class="appt-type">Follow-up</div>
+            </div>
+            <span class="badge badge-done">Completed</span>
+        </div>
+        <div class="appt-card">
+            <div class="appt-time">01:00 PM</div>
+            <div class="appt-avatar">PM</div>
+            <div>
+                <div class="appt-name">Patient Name</div>
+                <div class="appt-type">Routine Check</div>
+            </div>
+            <span class="badge badge-pending">Pending</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
