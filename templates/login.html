@@ -396,14 +396,7 @@
         <h1 class="card-title">Sign in</h1>
         <p class="card-sub">Access your clinical dashboard securely.</p>
 
-        <div class="role-tabs">
-            <button class="role-tab active" type="button"
-                onclick="this.parentElement.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active')">Doctor</button>
-            <button class="role-tab" type="button"
-                onclick="this.parentElement.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active')">Admin</button>
-            <button class="role-tab" type="button"
-                onclick="this.parentElement.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active')">Patient</button>
-        </div>
+      
 
         <form method="post">
             {% csrf_token %}
@@ -438,7 +431,7 @@
         </form>
 
         <div class="card-bottom">
-            Need access? <a href="#">Contact your administrator</a>
+            Need access? <a href="/myapp/user_userregister_get/">CREATE ACCOUNT</a>
         </div>
     </div>
 </div>
