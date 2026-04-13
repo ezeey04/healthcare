@@ -21,8 +21,8 @@ urlpatterns = [
 #========================= doctor=======================================
     path('doctor_addprescription_get/',views.doctor_addprescription_get),
     path('doctor_home_get/',views.doctor_home_get),
-    path('doctor_viewbooking/',views.doctor_viewbooking_get),
-    path('doctor_viewpriscription/',views.doctor_viewprescription_get),
+    path('doctor_viewbooking_get/',views.doctor_viewbooking_get),
+    path('doctor_viewpriscription_get/',views.doctor_viewprescription_get),
     path('doctor_viewschedule_get/',views.doctor_viewschedule_get),
 
 

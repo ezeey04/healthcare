@@ -92,89 +92,34 @@
           </tr>
         </thead>
         <tbody>
+          {% for i in data %}
           <tr>
-            <td class="si-no">01</td>
+            <td class="si-no">{{ i.id }}</td>
             <td>
               <div class="doctor-cell">
                 <div class="doc-avatar">MN</div>
                 <div class="doc-name">
-                  <strong>Dr. Meera Nair</strong>
-                  <span>MD, DM (Cardio)</span>
+                  <strong>{{ i.name }}</strong>
+                  <span>{{ i.degree }}</span>
                 </div>
               </div>
             </td>
-            <td><span class="dept-chip">Cardiology</span></td>
-            <td class="addr-cell">42, MG Road, Palayam<br>Thiruvananthapuram</td>
+            <td><span class="dept-chip">{{ i.department }}</span></td>
+            <td class="addr-cell">{{ i.address }}</td>
             <td class="contact-cell">
-              <p>+91 98765 43210</p>
-              <span>meera@caresync.in</span>
+              <p>{{ i.phone }}</p>
+              <span>{{ i.email }}</span>
             </td>
-            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
+            <td><a href="/myapp/user_viewschedule_get/" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
           </tr>
-          <tr>
-            <td class="si-no">02</td>
-            <td>
-              <div class="doctor-cell">
-                <div class="doc-avatar">SP</div>
-                <div class="doc-name">
-                  <strong>Dr. Suresh Pillai</strong>
-                  <span>MS, MCh</span>
-                </div>
-              </div>
-            </td>
-            <td><span class="dept-chip">Orthopaedics</span></td>
-            <td class="addr-cell">12, Statue Road<br>Kozhikode</td>
-            <td class="contact-cell">
-              <p>+91 91234 56789</p>
-              <span>suresh@caresync.in</span>
-            </td>
-            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
-          </tr>
-          <tr>
-            <td class="si-no">03</td>
-            <td>
-              <div class="doctor-cell">
-                <div class="doc-avatar">AR</div>
-                <div class="doc-name">
-                  <strong>Dr. Anjali Rao</strong>
-                  <span>DM (Neuro)</span>
-                </div>
-              </div>
-            </td>
-            <td><span class="dept-chip">Neurology</span></td>
-            <td class="addr-cell">7, Beach Road<br>Kochi</td>
-            <td class="contact-cell">
-              <p>+91 99887 76655</p>
-              <span>anjali@caresync.in</span>
-            </td>
-            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
-          </tr>
-          <tr>
-            <td class="si-no">04</td>
-            <td>
-              <div class="doctor-cell">
-                <div class="doc-avatar">VK</div>
-                <div class="doc-name">
-                  <strong>Dr. Vivek Kumar</strong>
-                  <span>MD, DCH</span>
-                </div>
-              </div>
-            </td>
-            <td><span class="dept-chip">Paediatrics</span></td>
-            <td class="addr-cell">3, Civil Lines<br>Thrissur</td>
-            <td class="contact-cell">
-              <p>+91 90000 11223</p>
-              <span>vivek@caresync.in</span>
-            </td>
-            <td><a href="user_view_schedule.html" class="action-btn view"><i class="bi bi-calendar3"></i> Schedules</a></td>
-          </tr>
+      {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
-<script src="user_sidebar.js"></script>
+<script src="/static/user_sidebar.js"></script>
 <script>document.getElementById('sidebar-root').innerHTML = renderUserSidebar('viewdoctor');</script>
 </body>
 </html>

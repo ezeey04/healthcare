@@ -1,11 +1,11 @@
 function renderUserSidebar(activePage) {
   const pages = [
-    { id: 'home',        label: 'Dashboard',      icon: 'bi-grid-1x2',        href: 'user_home.html',           section: 'Overview' },
-    { id: 'viewdoctor',  label: 'Find Doctors',   icon: 'bi-people',          href: 'user_view_doctors.html',   section: 'Appointments' },
-    { id: 'viewschedule',label: 'Schedules',      icon: 'bi-calendar3',       href: 'user_view_schedule.html',  section: null },
-    { id: 'bookings',    label: 'My Bookings',    icon: 'bi-clipboard2-check',href: 'user_view_bookings.html',  section: null },
-    { id: 'prescription',label: 'Prescriptions',  icon: 'bi-capsule-pill',    href: 'user_view_prescription.html', section: null },
-    { id: 'complaint',   label: 'Complaints',     icon: 'bi-chat-dots',       href: '#',                        section: 'Support' },
+    { id: 'home',        label: 'Dashboard',      icon: 'bi-grid-1x2',        href: '/myapp/user_home_get/',           section: 'Overview' },
+    { id: 'viewdoctor',  label: 'Find Doctors',   icon: 'bi-people',          href: '/myapp/user_viewdoctor_get/',   section: 'Appointments' },
+    { id: 'viewschedule',label: 'Schedules',      icon: 'bi-calendar3',       href: '/myapp/user_viewschedule_get/',  section: null },
+    { id: 'bookings',    label: 'My Bookings',    icon: 'bi-clipboard2-check',href: '/myapp/user_viewbookingsstatus_get/',  section: null },
+    { id: 'prescription',label: 'Prescriptions',  icon: 'bi-capsule-pill',    href: '/myapp/user_viewpriscription_get/', section: null },
+    { id: 'complaint',   label: 'Complaints',     icon: 'bi-chat-dots',       href: '/myapp/',                        section: 'Support' },
   ];
 
   let navHTML = '';
