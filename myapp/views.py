@@ -239,8 +239,3 @@ def user_viewpriscription_get(request):
 def user_viewschedule_get(request):
     data=schedule.objects.filter()
     return render(request,"user/viewschedule.html",{'data':data})
-
-
-
-def passs():
-    pass
