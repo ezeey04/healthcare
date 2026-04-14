@@ -243,30 +243,30 @@
 
     <div class="hero-visual"><i class="bi bi-shield-heart-fill"></i></div>
   </div>
-
   <div class="stats-grid">
     <div class="stat-card teal">
       <div class="stat-icon teal"><i class="bi bi-people-fill"></i></div>
       <h3>Total Doctors</h3>
-      <div class="stat-val">24</div>
-      <div class="stat-sub"><i class="bi bi-arrow-up-short" style="color:var(--green)"></i> 3 added this month</div>
+      <div class="stat-val"></div>
+      <div class="stat-sub"><i class="bi bi-arrow-up-short" style="color:var(--green)"></i> {% if new_doctors %}{{ new_doctors }}{% else %}0{% endif %} added this month</div>
     </div>
+
     <div class="stat-card green">
       <div class="stat-icon green"><i class="bi bi-calendar-check-fill"></i></div>
       <h3>Active Bookings</h3>
-      <div class="stat-val">142</div>
-      <div class="stat-sub"><i class="bi bi-arrow-up-short" style="color:var(--green)"></i> 12 new today</div>
+      <div class="stat-val">{% if active_bookings %}{{ active_bookings }}{% else %}0{% endif %}</div>
+      <div class="stat-sub"><i class="bi bi-arrow-up-short" style="color:var(--green)"></i> {% if new_bookings %}{{ new_bookings }}{% else %}0{% endif %} new today</div>
     </div>
     <div class="stat-card gold">
       <div class="stat-icon gold"><i class="bi bi-exclamation-circle-fill"></i></div>
       <h3>Pending Replies</h3>
-      <div class="stat-val">7</div>
+      <div class="stat-val">{% if pending_replies %}{{ pending_replies }}{% else %}0{% endif %}</div>
       <div class="stat-sub">Complaints awaiting</div>
     </div>
     <div class="stat-card red">
       <div class="stat-icon red"><i class="bi bi-clock-history"></i></div>
       <h3>Schedules Set</h3>
-      <div class="stat-val">12</div>
+      <div class="stat-val">{% if schedules_set %}{{ schedules_set }}{% else %}0{% endif %}</div>
       <div class="stat-sub">Across all doctors</div>
     </div>
   </div>
@@ -292,25 +292,19 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <div><h3>Today's Schedules</h3><p>Active doctor time slots</p></div>
+        <div><h3>Today's Schedules</h3><p>Active doctor</p></div>
         <a href="/myapp/admin_viewschedule_get/" class="action-btn edit"><i class="bi bi-arrow-right"></i> View All</a>
       </div>
+      {% for i in data %}
       <div class="card-body" style="padding-top:16px">
         <div class="schedule-item">
           <div class="schedule-dot" style="background:var(--teal)"></div>
-          <div class="schedule-info"><p>Dr. Meera Nair — Cardiology</p><span><i class="bi bi-clock"></i> 09:00 AM – 12:00 PM</span></div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-dot" style="background:var(--gold)"></div>
-          <div class="schedule-info"><p>Dr. Suresh Pillai — Ortho</p><span><i class="bi bi-clock"></i> 02:00 PM – 05:00 PM</span></div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-dot" style="background:var(--green)"></div>
-          <div class="schedule-info"><p>Dr. Anjali Rao — Neurology</p><span><i class="bi bi-clock"></i> 10:00 AM – 01:00 PM</span></div>
+          <div class="schedule-info"><p>{{ i.DOCTOR.name }}</p><span><i class="bi bi-clock"></i> {{ i.SCHEDULE.time }}</span></div>
         </div>
       </div>
     </div>
   </div>
+  {% endfor %}
 </form>
 </main>
 <script src="/static/sidebar.js"></script>

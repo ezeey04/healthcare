@@ -35,7 +35,7 @@ function renderUserSidebar(activePage) {
     <div class="sidebar-user">
       <div class="user-avatar">RJ</div>
       <div class="user-info">
-        <p>Rahul Joshi</p>
+        <p>{{ user.name }}</p>
         <span>Patient</span>
       </div>
       <a href="/myapp/logout_get/" class="logout-btn" title="Logout">
