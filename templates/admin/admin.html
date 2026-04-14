@@ -281,10 +281,12 @@
         <table>
           <thead><tr><th>Patient</th><th>Date</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td><div style="display:flex;align-items:center"><span class="row-avatar">RJ</span><strong>Rahul Joshi</strong></div></td><td>Apr 02, 2025</td><td><span class="badge badge-pending">Pending</span></td></tr>
-            <tr><td><div style="display:flex;align-items:center"><span class="row-avatar">PK</span><strong>Priya Kumar</strong></div></td><td>Apr 03, 2025</td><td><span class="badge badge-active">Confirmed</span></td></tr>
-            <tr><td><div style="display:flex;align-items:center"><span class="row-avatar">AM</span><strong>Arjun Menon</strong></div></td><td>Apr 04, 2025</td><td><span class="badge badge-rejected">Rejected</span></td></tr>
-          </tbody>
+            {% for i in data %}
+            <tr><td><div style="display:flex;align-items:center"><span class="row-avatar">{{ i.USER.name|first }}</span><strong>{{ i.USER.name }}</strong></div></td><td>{{ i.SCHEDULE.date }}</td><td><span class="badge badge-pending">Pending</span></td></tr>
+            <tr><td><div style="display:flex;align-items:center"><span class="row-avatar">{{ i.USER.name|first }}</span><strong>{{ i.USER.name }}</strong></div></td><td>{{ i.SCHEDULE.date }}</td><td><span class="badge badge-active">Confirmed</span></td></tr>
+            <tr><td><div style="display:flex;align-items:center"><span class="row-avatar">{{ i.USER.name|first }}</span><strong>{{ i.USER.name }}</strong></div></td><td>{{ i.SCHEDULE.date }}</td><td><span class="badge badge-rejected">Rejected</span></td></tr>
+          {% endfor %}
+        </tbody>
         </table>
       </div>
     </div>
