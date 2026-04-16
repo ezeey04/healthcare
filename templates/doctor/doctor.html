@@ -253,19 +253,19 @@
 <div class="hero">
     <div class="hero-content">
         <div class="hero-greeting">Good morning</div>
-        <h1 class="hero-title">Welcome, Dr. Smith</h1>
+        <h1 class="hero-title">Welcome, Dr.{{ dt.name }} </h1>
         <p class="hero-sub">Here's your overview for today.</p>
         <div class="stats-row">
             <div class="stat-pill">
-                <div class="val">8</div>
+                <div class="val">{{ appointments_today }}</div>
                 <div class="lbl">Appointments today</div>
             </div>
             <div class="stat-pill">
-                <div class="val">3</div>
+                <div class="val">{{ pending_reviews }}</div>
                 <div class="lbl">Pending reviews</div>
             </div>
             <div class="stat-pill">
-                <div class="val">12</div>
+                <div class="val">{{ this_week_appointments }}</div>
                 <div class="lbl">This week</div>
             </div>
         </div>
@@ -279,47 +279,34 @@
             <h3>View Schedule</h3>
             <p>Check your upcoming appointments and available time slots.</p>
         </a>
-        <a href="/myapp/doctor_viewpriscription_get/" class="card">
+        <!-- <a href="/myapp/doctor_viewprescription_get/{{i.id}}" class="card">
             <div class="card-icon blue">📋</div>
             <h3>Prescriptions</h3>
             <p>Manage and review all patient prescriptions and findings.</p>
-        </a>
-        <a href="/myapp/doctor_viewbooking_get/'" class="card">
+        </a> -->
+        <a href="/myapp/doctor_viewbooking_get_all/" class="card">
             <div class="card-icon amber">👥</div>
-            <h3>Patients</h3>
+            <h3>Patients History</h3>
             <p>View your full patient list and medical histories.</p>
         </a>
     </div>
 
     <div class="section-title">Today's Appointments</div>
     <div class="appointment-list">
+
+        {% for i in data %}
         <div class="appt-card">
-            <div class="appt-time">09:00 AM</div>
-            <div class="appt-avatar">AK</div>
+            <div class="appt-time">Time:{{i.SCHEDULE.from_time}}<br>{{ i.SCHEDULE.to_time }}</div>
+            <div class="appt-date">{{i.date}}</div>
             <div>
-                <div class="appt-name">Patient Name</div>
-                <div class="appt-type">General Consultation</div>
+                <div class="appt-name">{{i.USER.name}}</div>
+                <div class="appt-type">{{i.SCHEDULE.DOCTOR.name}}</div>
             </div>
-            <span class="badge badge-pending">Pending</span>
+            <span class="badge badge-pending">{{i.status}}</span>
         </div>
-        <div class="appt-card">
-            <div class="appt-time">10:30 AM</div>
-            <div class="appt-avatar">RJ</div>
-            <div>
-                <div class="appt-name">Patient Name</div>
-                <div class="appt-type">Follow-up</div>
-            </div>
-            <span class="badge badge-done">Completed</span>
-        </div>
-        <div class="appt-card">
-            <div class="appt-time">01:00 PM</div>
-            <div class="appt-avatar">PM</div>
-            <div>
-                <div class="appt-name">Patient Name</div>
-                <div class="appt-type">Routine Check</div>
-            </div>
-            <span class="badge badge-pending">Pending</span>
-        </div>
+   
+
+        {% endfor %}
     </div>
 </div>
 

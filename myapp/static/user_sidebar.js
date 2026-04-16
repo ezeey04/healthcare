@@ -2,10 +2,9 @@ function renderUserSidebar(activePage) {
   const pages = [
     { id: 'home',        label: 'Dashboard',      icon: 'bi-grid-1x2',        href: '/myapp/user_home_get/',           section: 'Overview' },
     { id: 'viewdoctor',  label: 'Find Doctors',   icon: 'bi-people',          href: '/myapp/user_viewdoctor_get/',   section: 'Appointments' },
-    { id: 'viewschedule',label: 'Schedules',      icon: 'bi-calendar3',       href: '/myapp/user_viewschedule_get/',  section: null },
     { id: 'bookings',    label: 'My Bookings',    icon: 'bi-clipboard2-check',href: '/myapp/user_viewbookingsstatus_get/',  section: null },
-    { id: 'prescription',label: 'Prescriptions',  icon: 'bi-capsule-pill',    href: '/myapp/user_viewpriscription_get/', section: null },
-    { id: 'complaint',   label: 'Complaints',     icon: 'bi-chat-dots',       href: '/myapp/',                        section: 'Support' },
+    { id: 'prescription',label: 'Prescriptions',  icon: 'bi-capsule-pill',    href: '/myapp/user_viewprescription_get/', section: null },
+    // { id: 'complaint',   label: 'Complaints',     icon: 'bi-chat-dots',       href: '/myapp/',                        section: 'Support' },
   ];
 
   let navHTML = '';
@@ -35,7 +34,7 @@ function renderUserSidebar(activePage) {
     <div class="sidebar-user">
       <div class="user-avatar">RJ</div>
       <div class="user-info">
-        <p>{{ user.name }}</p>
+        <p>USER</p>
         <span>Patient</span>
       </div>
       <a href="/myapp/logout_get/" class="logout-btn" title="Logout">

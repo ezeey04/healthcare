@@ -248,11 +248,7 @@
             <h1>My Schedule</h1>
             <p>Manage your availability and appointment slots.</p>
         </div>
-        <div class="month-nav">
-            <button>&lsaquo;</button>
-            January 2025
-            <button>&rsaquo;</button>
-        </div>
+       
     </div>
 
     <div class="card">
@@ -268,71 +264,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- {% for slot in schedule %} -->
+                    {% for i in data %}
                     <tr>
                         <td>
                             <div class="date-cell">
-                                <span class="date-main">Jan 15, 2025 <span class="today-tag">Today</span></span>
-                                <span class="date-day">Wednesday</span>
+                                <span class="date-main">{{ i.date }} <span class="today-tag"></span></span>
+                                
                             </div>
                         </td>
                         <td>
                             <div class="time-range">
                                 <div class="time-dot"></div>
-                                09:00 AM
+                                {{ i.from_time }}
                             </div>
                         </td>
-                        <td>01:00 PM</td>
+                        <td>{{ i.to_time }}</td>
                         <td>
-                            <a href="" class="bookings-btn">
-                                View Bookings
-                                <span class="count-badge">4</span>
+                          
+                                <a href="/myapp/doctor_viewbooking_get/{{ i.id }}/" class="bookings-btn">bookings</a>
+                                <span class="count-badge">{{ i.bookings_count }}</span>
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="date-cell">
-                                <span class="date-main">Jan 17, 2025</span>
-                                <span class="date-day">Friday</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="time-range">
-                                <div class="time-dot"></div>
-                                02:00 PM
-                            </div>
-                        </td>
-                        <td>06:00 PM</td>
-                        <td>
-                            <a href="" class="bookings-btn">
-                                View Bookings
-                                <span class="count-badge">2</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="date-cell">
-                                <span class="date-main">Jan 20, 2025</span>
-                                <span class="date-day">Monday</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="time-range">
-                                <div class="time-dot"></div>
-                                10:00 AM
-                            </div>
-                        </td>
-                        <td>12:00 PM</td>
-                        <td>
-                            <a href="" class="bookings-btn">
-                                View Bookings
-                                <span class="count-badge">1</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <!-- {% endfor %} -->
+                    {% endfor %}
                 </tbody>
             </table>
         </form>

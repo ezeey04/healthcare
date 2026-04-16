@@ -45,7 +45,7 @@
         <thead>
           <tr>
             <th>Doctor</th><th>Phone</th><th>Email</th><th>Department</th>
-            <th>Qualification</th><th>DOB</th><th>Actions</th>
+            <th>Qualification</th><th>DOB</th><th>Gender</th><th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -54,10 +54,10 @@
             <td><div style="display:flex;align-items:center"><span class="row-avatar"></span><strong>{{ i.name }}</strong></div></td>
             <td>{{ i.phone }}</td><td>{{ i.email }}</td>
             <td><span class="dept-chip">{{ i.department }}</span></td>
-            <td class="qual-text">{{ i.qualification }}</td><td>{{ i.dob }}</td>
+            <td class="qual-text">{{ i.qualification }}</td><td>{{ i.dob }}</td><td>{{ i.gender }}</td>
             <td><div style="display:flex;gap:7px;">
               <a href="/myapp/admin_editdoctor_get/{{ i.id }}" class="action-btn edit"><i class="bi bi-pencil"></i> Edit</a>
-              <a href="#" class="action-btn delete"><i class="bi bi-trash"></i> Delete</a>
+              <a href="/myapp/delete_doctor_get/{{ i.id }}" class="action-btn delete"><i class="bi bi-trash"></i> Delete</a>
             </div></td>
           </tr>
           {% endfor %}

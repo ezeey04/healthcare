@@ -248,40 +248,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- {% for rx in prescriptions %} -->
+                        {% for i in data %}
                         <tr>
-                            <td><span class="badge badge-booked">Booked</span></td>
+                            <td><span class="badge badge-booked">{{i.status}}</span></td>
                             <td>
                                 <div class="user-cell">
                                     <div class="avatar">PT</div>
-                                    Patient Name
+                                   {{i.BOOKING.USER.name}}<br>{{i.BOOKING.USER.phone}}
                                 </div>
                             </td>
-                            <td>2025-01-15</td>
-                            <td><div class="prescription-text">Amoxicillin 500mg, 3x daily</div></td>
-                            <td><div class="findings-text">Mild upper respiratory infection, clear chest.</div></td>
+                            <td>{{i.BOOKING.date}}</td>
+                            <td><div class="prescription-text">{{i.prescription}}</div></td>
+                            <td><div class="findings-text">{{i.findings}}.</div></td>
                             <td>
-                                <a href="" class="delete-btn">Delete</a>
+                                <a href="/myapp/delete_prescription_get/{{ i.id }}" class="delete-btn">Delete</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td><span class="badge badge-not">Not Booked</span></td>
-                            <td>
-                                <div class="user-cell">
-                                    <div class="avatar">PT</div>
-                                    Patient Name
-                                </div>
-                            </td>
-                            <td>2025-01-16</td>
-                            <td><div class="prescription-text">Paracetamol 500mg as needed</div></td>
-                            <td><div class="findings-text">Mild fever, no complications.</div></td>
-                            <td>
-                                <a href="" class="delete-btn">Delete</a>
-                            </td>
-                        </tr>
-                        <!-- {% endfor %} -->
+
+
+
+                    
+                        {% endfor %}
                     </tbody>
                 </table>
+
             </form>
         </div>
     </div>

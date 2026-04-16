@@ -137,7 +137,7 @@
   <div class="hero-banner">
     <div class="hero-text">
       <div class="greeting">Patient Portal · CareSync</div>
-      <h1>Welcome Back,<br>{{ user.name }}</h1>
+      <h1>Welcome {{ user.name }},<br></h1>
       <p>Your health dashboard is ready. Book appointments with top specialists, check your prescriptions, and track your care journey.</p>
       <div class="hero-actions">
         <a href="/myapp/user_viewdoctor_get/" class="btn-hero"><i class="bi bi-people"></i> Find a Doctor</a>
@@ -152,19 +152,19 @@
     <div class="stat-card teal">
       <div class="stat-icon teal"><i class="bi bi-calendar-check-fill"></i></div>
       <h3>Upcoming Appointments</h3>
-      <div class="stat-val">2</div>
-      <div class="stat-sub">Next: 02 Apr · 09:00 AM</div>
+      <div class="stat-val">{{ upcoming_appointments }}</div>
+      <div class="stat-sub"></div>
     </div>
     <div class="stat-card gold">
       <div class="stat-icon gold"><i class="bi bi-hourglass-split"></i></div>
       <h3>Pending Bookings</h3>
-      <div class="stat-val">1</div>
+      <div class="stat-val">{{ pending_bookings }}</div>
       <div class="stat-sub">Awaiting confirmation</div>
     </div>
     <div class="stat-card green">
       <div class="stat-icon green"><i class="bi bi-capsule-pill"></i></div>
       <h3>Prescriptions</h3>
-      <div class="stat-val">4</div>
+      <div class="stat-val">{{ prescriptions }}</div>
       <div class="stat-sub">From your last visits</div>
     </div>
   </div>
@@ -188,19 +188,19 @@
               <div class="qa-desc">Browse specialists by department</div>
               <div class="qa-arrow"><i class="bi bi-arrow-right-short"></i> Go</div>
             </a>
-            <a href="" class="qa-card">
+            <!-- <a href="/myapp/user_viewschedule_get/" class="qa-card">
               <div class="qa-icon" style="background:#fdf3e3;color:var(--gold);"><i class="bi bi-calendar3"></i></div>
               <div class="qa-label">View Schedules</div>
               <div class="qa-desc">Check available appointment slots</div>
               <div class="qa-arrow"><i class="bi bi-arrow-right-short"></i> Go</div>
-            </a>
+            </a> -->
             <a href="/myapp/user_viewbookingsstatus_get/" class="qa-card">
               <div class="qa-icon" style="background:#e8faf3;color:var(--green);"><i class="bi bi-clipboard2-check-fill"></i></div>
               <div class="qa-label">My Bookings</div>
               <div class="qa-desc">Track booking status & history</div>
               <div class="qa-arrow"><i class="bi bi-arrow-right-short"></i> Go</div>
             </a>
-            <a href="" class="qa-card">
+            <a href="/myapp/user_viewprescription_get/" class="qa-card">
               <div class="qa-icon" style="background:#fdeaea;color:var(--red);"><i class="bi bi-capsule-pill"></i></div>
               <div class="qa-label">Prescriptions</div>
               <div class="qa-desc">View doctor notes & medications</div>
@@ -212,6 +212,7 @@
 
       <!-- Upcoming Appointments -->
       <div class="card">
+        {% for i in data %}
         <div class="card-header">
           <div><h3>Upcoming Appointments</h3><p>Your next scheduled visits</p></div>
           <a href="/myapp/user_viewbookingsstatus_get/" class="action-btn view"><i class="bi bi-arrow-right"></i> View All</a>
@@ -219,25 +220,16 @@
         <div class="card-body" style="padding-top:16px;">
           <div class="slot-item">
             <div class="slot-dot" style="background:var(--teal)"></div>
-            <div class="slot-time">09:00 AM</div>
+            <div class="slot-time">{{ i.SCHEDULE__TIME }}</div>
             <div class="slot-info">
-              <p>Dr. Meera Nair</p>
-              <span>Cardiology · 02 Apr 2025</span>
+              <p>{{ i.DOCTOR__NAME }}</p>
+              <span>{{ i.SCHEDULE__DOCTOR__DEPARTMENT }} · {{ i.SCHEDULE__DATE }}</span>
             </div>
-            <span class="badge badge-active" style="margin-left:auto;">Confirmed</span>
-          </div>
-          <div class="slot-item">
-            <div class="slot-dot" style="background:var(--gold)"></div>
-            <div class="slot-time">02:00 PM</div>
-            <div class="slot-info">
-              <p>Dr. Suresh Pillai</p>
-              <span>Orthopaedics · 05 Apr 2025</span>
-            </div>
-            <span class="badge badge-pending" style="margin-left:auto;">Pending</span>
+            <span class="badge badge-active" style="margin-left:auto;">{{ i.STATUS }}</span>
           </div>
         </div>
       </div>
-
+     {% endfor %}
     </div>
 
     <!-- Health Tips -->

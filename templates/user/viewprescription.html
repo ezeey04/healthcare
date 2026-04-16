@@ -90,65 +90,37 @@
       <h1>My Prescriptions</h1>
       <p>Prescriptions issued by your doctors after each visit</p>
     </div>
-    <a href="user_view_bookings.html" class="action-btn back"><i class="bi bi-arrow-left"></i> My Bookings</a>
+    <a href="/myapp/user_viewbookingsstatus_get/" class="action-btn back"><i class="bi bi-arrow-left"></i> My Bookings</a>
   </div>
 
   <!-- Prescription Card 1 -->
   <div class="rx-card">
+    {% for i in data %}
     <div class="rx-card-header">
       <div class="rx-header-left">
-        <div class="rx-doc-avatar">MN</div>
+        <div class="rx-doc-avatar"></div>
         <div class="rx-doc-name">
-          <p>Dr. Meera Nair</p>
-          <span>Cardiology · Booking #BKG-2041</span>
+          <p>{{ i.BOOKING.SCHEDULE.DOCTOR.name }}</p>
+          <span>{{ i.BOOKING.SCHEDULE.DOCTOR.department }} · {{ i.id }}</span>
         </div>
       </div>
-      <div class="rx-date"><i class="bi bi-calendar3"></i> 02 Apr 2025</div>
+      <div class="rx-date"><i class="bi bi-calendar3"></i> {{ i.BOOKING.date }}</div>
     </div>
     <div class="rx-body">
-      <div class="rx-section">
-        <label><i class="bi bi-capsule-pill"></i> Prescription</label>
-        <div class="rx-content">
-          Tab. Paracetamol 500mg — twice daily after food for 5 days<br>
-          Tab. Pantoprazole 40mg — once daily before breakfast<br>
-          Syp. Benadryl 10ml — at night for 3 days
-        </div>
-      </div>
-      <div class="rx-section">
-        <label><i class="bi bi-clipboard2-pulse"></i> Doctor's Findings</label>
-        <div class="rx-content">
-          Patient presents with mild fever (99.4°F), sore throat, and fatigue. No signs of bacterial infection. Advised rest, hydration, and a follow-up in 5 days if symptoms persist.
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Prescription Card 2 -->
-  <div class="rx-card">
-    <div class="rx-card-header">
-      <div class="rx-header-left">
-        <div class="rx-doc-avatar">MN</div>
-        <div class="rx-doc-name">
-          <p>Dr. Meera Nair</p>
-          <span>Cardiology · Booking #BKG-1887</span>
-        </div>
-      </div>
-      <div class="rx-date"><i class="bi bi-calendar3"></i> 10 Mar 2025</div>
-    </div>
-    <div class="rx-body">
       <div class="rx-section">
         <label><i class="bi bi-capsule-pill"></i> Prescription</label>
         <div class="rx-content">
-          Tab. Amlodipine 5mg — once daily in the morning<br>
-          Tab. Aspirin 75mg — once daily after food
+          {{ i.prescription }}
         </div>
       </div>
       <div class="rx-section">
         <label><i class="bi bi-clipboard2-pulse"></i> Doctor's Findings</label>
         <div class="rx-content">
-          BP: 138/88 mmHg. Mild hypertension noted. ECG within normal limits. Advised dietary modification, low sodium intake, and regular walking. Follow-up in 4 weeks.
+          {{ i.findings }}
         </div>
       </div>
+        {% endfor %}
     </div>
   </div>
 

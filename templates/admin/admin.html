@@ -243,32 +243,39 @@
 
     <div class="hero-visual"><i class="bi bi-shield-heart-fill"></i></div>
   </div>
-  <div class="stats-grid">
-    <div class="stat-card teal">
-      <div class="stat-icon teal"><i class="bi bi-people-fill"></i></div>
-      <h3>Total Doctors</h3>
-      <div class="stat-val"></div>
-      <div class="stat-sub"><i class="bi bi-arrow-up-short" style="color:var(--green)"></i> {% if new_doctors %}{{ new_doctors }}{% else %}0{% endif %} added this month</div>
-    </div>
+<div class="stat-card teal">
+  <div class="stat-icon teal">
+    <i class="bi bi-people-fill"></i>
+  </div>
 
-    <div class="stat-card green">
-      <div class="stat-icon green"><i class="bi bi-calendar-check-fill"></i></div>
-      <h3>Active Bookings</h3>
-      <div class="stat-val">{% if active_bookings %}{{ active_bookings }}{% else %}0{% endif %}</div>
-      <div class="stat-sub"><i class="bi bi-arrow-up-short" style="color:var(--green)"></i> {% if new_bookings %}{{ new_bookings }}{% else %}0{% endif %} new today</div>
-    </div>
-    <div class="stat-card gold">
-      <div class="stat-icon gold"><i class="bi bi-exclamation-circle-fill"></i></div>
-      <h3>Pending Replies</h3>
-      <div class="stat-val">{% if pending_replies %}{{ pending_replies }}{% else %}0{% endif %}</div>
-      <div class="stat-sub">Complaints awaiting</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-icon red"><i class="bi bi-clock-history"></i></div>
-      <h3>Schedules Set</h3>
-      <div class="stat-val">{% if schedules_set %}{{ schedules_set }}{% else %}0{% endif %}</div>
-      <div class="stat-sub">Across all doctors</div>
-    </div>
+  <h3>Total Doctors</h3>
+
+  <div class="stat-val">{{ total_doctors }}</div>
+
+  <div class="stat-sub">
+    <i class="bi bi-arrow-up-short" style="color:var(--green)"></i>
+    {% if new_doctors %}{{ new_doctors }}{% else %}0{% endif %} added this month
+  </div>
+</div>
+
+   <div class="stat-card green">
+  <div class="stat-icon green">
+    <i class="bi bi-calendar-check-fill"></i>
+  </div>
+
+  <h3>Active Bookings</h3>
+
+  <div class="stat-val">
+    {% if active_bookings %}{{ active_bookings }}{% else %}0{% endif %}
+  </div>
+
+  <div class="stat-sub">
+    <i class="bi bi-arrow-up-short" style="color:var(--green)"></i>
+    {% if new_bookings %}{{ new_bookings }}{% else %}0{% endif %} new today
+  </div>
+</div>
+
+
   </div>
 
   <div class="bottom-grid">
@@ -279,7 +286,7 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Patient</th><th>Date</th><th>Status</th></tr></thead>
+          <!-- <thead><tr><th>Patient</th><th>Date</th><th>Status</th></tr></thead> -->
           <tbody>
             {% for i in data %}
             <tr><td><div style="display:flex;align-items:center"><span class="row-avatar">{{ i.USER.name|first }}</span><strong>{{ i.USER.name }}</strong></div></td><td>{{ i.SCHEDULE.date }}</td><td><span class="badge badge-pending">Pending</span></td></tr>

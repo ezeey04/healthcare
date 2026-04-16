@@ -4,7 +4,6 @@ function renderSidebar(activePage) {
     { id: 'viewdoctor',    label: 'Doctors',     icon: 'bi-people',           href: '/myapp/admin_viewdoctor_get/',   section: 'Medical Staff' },
     { id: 'viewschedule',  label: 'Schedules',   icon: 'bi-calendar3',        href: '/myapp/admin_viewschedule_get/', section: null },
     { id: 'verifybooking', label: 'Bookings',    icon: 'bi-clipboard2-check', href: '/myapp/admin_verifybooking_get/',section: 'Patients' },
-    { id: 'complaints',    label: 'Complaints',  icon: 'bi-chat-dots',        href: '/myapp/admin_viewcomplaint_get/',     section: null },
     // { id: 'complaints',    label: 'Complaints',  icon: 'bi-chat-dots',        href: '/myapp/admin_viewcomplaint_get/',     section: null },
   ];
 

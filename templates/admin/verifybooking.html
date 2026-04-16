@@ -31,7 +31,7 @@
 </html> -->
 
 
-<!DOCTYPE html>
+<!--DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -67,11 +67,11 @@
   <div class="summary-strip">
     <div class="summary-card">
       <div class="summary-icon" style="background:#fef3cd;color:#856404;"><i class="bi bi-hourglass-split"></i></div>
-      <div><p>Pending</p><span>5</span></div>
+      <div><p>Pending</p><span>{{ pending_count }}</span></div>
     </div>
     <div class="summary-card">
       <div class="summary-icon" style="background:#e8faf3;color:#0a6640;"><i class="bi bi-check-circle-fill"></i></div>
-      <div><p>Accepted</p><span>118</span></div>
+      <div><p>Accepted</p><span>{{ accepted_count }}</span></div>
     </div>
     <div class="summary-card">
       <div class="summary-icon" style="background:#fdeaea;color:#842029;"><i class="bi bi-x-circle-fill"></i></div>
@@ -102,10 +102,10 @@
           <tr>
             <td><div style="display:flex;align-items:center"><span class="row-avatar"></span><strong>{{ i.USER.name }}</strong></div></td>
             <td>{{ i.SCHEDULE.DOCTOR.name }}</td><td>{{ i.SCHEDULE.date }}</td><td>{{ i.schedule.from_time }}</td><td>{{ i.schedule.to_time }}</td>
-            <td><span class="badge badge-pending">Pending</span></td>
+            <td><span class="badge badge-pending"></span></td>
             <td><div class="status-actions">
-              <a href="#" class="action-btn accept"><i class="bi bi-check-circle"></i> Accept</a>
-              <a href="#" class="action-btn reject"><i class="bi bi-x-circle"></i> Reject</a>
+              <a href="/myapp/admin_accept_booking_get/{{ i.id }}" class="action-btn accept"><i class="bi bi-check-circle"></i> Accept</a>
+              <a href="/myapp/admin_reject_booking_get/{{ i.id }}" class="action-btn reject"><i class="bi bi-x-circle"></i> Reject</a>
             </div></td>
           </tr>
         {% endfor %}
@@ -119,5 +119,229 @@
 </main>
 <script src="/static/sidebar.js"></script>
 <script>document.getElementById('sidebar-root').innerHTML = renderSidebar('verifybooking');</script>
+</body>
+</html -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>CareSync | Verify Bookings</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+<link rel="stylesheet" href="/static/shared.css"/>
+
+<style>
+
+/* Summary Cards */
+.summary-strip {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.summary-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.summary-icon {
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.summary-card p {
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+}
+
+.summary-card span {
+  font-size:24px;
+  font-weight:700;
+  color:var(--navy);
+}
+
+/* Status Badges */
+.badge-active {
+  background: #e8faf3;
+  color: #0a6640;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.badge-rejected {
+  background: #fdeaea;
+  color: #842029;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.badge-pending {
+  background: #fef3cd;
+  color: #856404;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="sidebar-root"></div>
+
+<main class="main">
+
+<!-- Header -->
+<div class="page-header">
+  <div>
+    <h1>Verify Bookings</h1>
+    <p>Review and approve patient appointment requests</p>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary-strip">
+
+  <div class="summary-card">
+    <div class="summary-icon" style="background:#fef3cd;color:#856404;">
+      <i class="bi bi-hourglass-split"></i>
+    </div>
+    <div>
+      <p>Pending</p>
+      <span>{{ pending_count }}</span>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-icon" style="background:#e8faf3;color:#0a6640;">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <div>
+      <p>Accepted</p>
+      <span>{{ accepted_count }}</span>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-icon" style="background:#fdeaea;color:#842029;">
+      <i class="bi bi-x-circle-fill"></i>
+    </div>
+    <div>
+      <p>Rejected</p>
+      <span>{{ rejected_count }}</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Table -->
+<div class="card">
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      {% for i in data %}
+      <tr>
+
+        <!-- Patient -->
+        <td>
+          <div style="display:flex;align-items:center">
+            <span class="row-avatar"></span>
+            <strong>{{ i.USER.name }}</strong>
+          </div>
+        </td>
+
+        <!-- Doctor -->
+        <td>{{ i.SCHEDULE.DOCTOR.name }}</td>
+
+        <!-- Date -->
+        <td>{{ i.SCHEDULE.date }}</td>
+
+        <!-- Time -->
+        <td>{{ i.SCHEDULE.from_time }}</td>
+        <td>{{ i.SCHEDULE.to_time }}</td>
+
+        <!-- Status -->
+        <td>
+          <span class="badge 
+            {% if i.status == 'accepted' %}badge-active
+            {% elif i.status == 'rejected' %}badge-rejected
+            {% else %}badge-pending
+            {% endif %}">
+            
+            {{ i.status }}
+
+          </span>
+        </td>
+
+        <!-- Actions -->
+        <td>
+          <div class="status-actions">
+
+            {% if i.status == 'booked' %}
+              <a href="/myapp/admin_accept_booking_get/{{ i.id }}" class="action-btn accept">
+                <i class="bi bi-check-circle"></i> Accept
+              </a>
+
+              <a href="/myapp/admin_reject_booking_get/{{ i.id }}" class="action-btn reject">
+                <i class="bi bi-x-circle"></i> Reject
+              </a>
+            {% else %}
+              <span style="color:gray;">No actions</span>
+            {% endif %}
+
+          </div>
+        </td>
+
+      </tr>
+      {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+</main>
+
+<script src="/static/sidebar.js"></script>
+<script>
+document.getElementById('sidebar-root').innerHTML = renderSidebar('verifybooking');
+</script>
+
 </body>
 </html>

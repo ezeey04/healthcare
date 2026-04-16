@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib import request
 
 from django.http import HttpResponse
@@ -30,6 +31,9 @@ def login_get(request):
                 print("jajaja")
                 login(request,user)
                 return redirect('/myapp/user_home_get/')
+            else:
+                messages.warning(request,"invalid username or password")
+                return redirect('/myapp/login_get/')
         else:
             messages.warning(request,"invalid username or password")
             return redirect('/myapp/login_get/')
@@ -40,8 +44,21 @@ def logout_get(request):
     logout(request)
     return redirect('/myapp/login_get/')
 
+def delete_doctor_get(request,id):
+    ob=doctor.objects.get(id=id)
+    a=ob.LOGIN
+    a.delete()
+    return redirect('/myapp/admin_viewdoctor_get/')
 
+def delete_schedule_get(request,id):
+    ob=schedule.objects.get(id=id)
+    ob.delete()
+    return redirect('/myapp/admin_viewschedule_get/')
 
+# def delete_prescription_get(request,id):
+#     ob=prescription.objects.get(id=id)
+#     ob.delete()
+#     return redirect('/myapp/doctor_viewprescription_get/')
 
 def admin_adddoctor_get(request):
     if request.method == 'POST':
@@ -99,8 +116,47 @@ def admin_addschedule_get(request):
 
     return render(request,"admin/addschedule.html",{"data":data})
 
+
+
+from myapp.models import doctor, booking
+from datetime import date
+
 def admin_home_get(request):
-    return render(request,"admin/admin.html")
+
+    # Total doctors
+    total_doctors = doctor.objects.count()
+
+    # Active bookings (accepted)
+    active_bookings = booking.objects.filter(status='accepted').count()
+
+    # New bookings today
+    today = date.today()
+    new_bookings = booking.objects.filter(date=today).count()
+
+    # Optional: new doctors (simple demo or replace with real logic)
+    new_doctors = doctor.objects.count()  # you can customize later
+
+    return render(request, "admin/admin.html", {
+        'total_doctors': total_doctors,
+        'new_doctors': new_doctors,
+        'active_bookings': active_bookings,
+        'new_bookings': new_bookings
+    })
+
+
+def admin_accept_booking_get(request,id):
+    ob=booking.objects.get(id=id)
+    ob.status='accepted'
+    ob.save()
+    return redirect('/myapp/admin_verifybooking_get/')
+
+
+def admin_reject_booking_get(request,id):
+    ob=booking.objects.get(id=id)
+    ob.status='rejected'
+    ob.save()
+    return redirect('/myapp/admin_verifybooking_get/')
+
 
 def admin_editdoctor_get(request,id):
     ob=doctor.objects.get(id=id)
@@ -131,26 +187,26 @@ def admin_editdoctor_get(request,id):
         ob.district=district
         ob.save()
 
-        return redirect('/myapp/admin_viewdoctor_get//')
+        return redirect('/myapp/admin_viewdoctor_get/')
 
     return render(request,"admin/editdoctor.html",{'data':ob})
 
-def admin_editschedule_get(request):
-    ob=doctor.objects.get(id=id)
+def admin_editschedule_get(request, id):
+    ob = schedule.objects.get(id=id)  
 
     if request.method == 'POST':
-        date=request.POST['date']
-        fromtime=request.POST['fromtime']
-        totime=request.POST['totime']
+        date = request.POST.get('date')
+        fromtime = request.POST.get('fromtime')
+        totime = request.POST.get('totime')
 
-        ob.date=date
-        ob.fromtime=fromtime
-        ob.totime=totime
+        ob.date = date
+        ob.from_time = fromtime
+        ob.to_time = totime
         ob.save()
 
-        return redirect('/myapp/admin_viewschedule_get//')
+        return redirect('/myapp/admin_viewschedule_get/')
 
-    return render(request,"admin/editschedule.html",{'data':ob})
+    return render(request, "admin/editschedule.html", {'data': ob})
 
 def admin_sendreply_get(request):
     ob=doctor.objects.get(id=id)
@@ -160,7 +216,7 @@ def admin_sendreply_get(request):
         ob.reply=reply
         ob.save()
 
-        return redirect('/myapp/admin_viewcomplaint_get//')
+        return redirect('/myapp/admin_viewcomplaint_get/')
 
     return render(request,"admin/sendreply.html",{'data':ob})
 
@@ -184,30 +240,86 @@ def admin_viewschedule_get(request):
 
 # ============================= doctor =================
 
-def doctor_addprescription_get(request):
-    ob=doctor.objects.get(id=id)
-    
-    if request.method == 'POST':
-        priscription=request.POST['priscription']
-        findings=request.POST['findings']
+# def doctor_addprescription_get(request,id):
+#     request.session['booking_id'] = id
+#     return render(request,"doctor/addprescription.html")
 
-        ob.priscription=priscription
-        ob.findings=findings
-        ob.save()
-        
-        return redirect('/myapp/doctor_viewprescription_get//')
-    return render(request,"doctor/addprescription.html")
+# def doctor_addprescription_POST(request):
+    # ob=doctor.objects.get(id=id)
+    
+    prescriptions=request.POST['prescription']
+    findings=request.POST['findings']
+
+    ob=prescription()
+    ob.BOOKING_id=request.session['booking_id']
+
+    ob.prescription=prescriptions
+    ob.findings=findings
+    ob.save()
+
+    k=request.session['booking_id']
+    
+    return redirect(f'/myapp/doctor_viewprescription_get/{k}/')
+
+
+
+
+from django.shortcuts import render, redirect
+from myapp.models import prescription
+
+# 👉 OPEN ADD FORM
+def doctor_addprescription_get(request, id):
+    request.session['booking_id'] = id
+    return render(request, "doctor/addprescription.html")
+
+
+# 👉 SAVE PRESCRIPTION
+def doctor_addprescription_POST(request):
+    prescriptions = request.POST.get('prescription')
+    findings = request.POST.get('findings')
+
+    booking_id = request.session.get('booking_id')
+
+    ob = prescription()
+    ob.BOOKING_id = booking_id
+    ob.prescription = prescriptions
+    ob.findings = findings
+    ob.date=datetime.today()
+    ob.save()
+
+    return redirect(f'/myapp/doctor_viewbooking_get/{booking_id}/')
+
+
+# 👉 VIEW PRESCRIPTION (ONLY FOR ONE BOOKING)
+def doctor_viewprescription_get(request, id):
+    data = prescription.objects.filter(BOOKING_id=id)
+    return render(request, "doctor/viewprescription.html", {'data': data})
+
+
+# 👉 DELETE PRESCRIPTION
+def delete_prescription_get(request, id):
+    prescription.objects.get(id=id).delete()
+    booking_id = request.session.get('booking_id')
+
+    return redirect(f'/myapp/doctor_viewprescription_get/{booking_id}')
+
 
 def doctor_home_get(request):
-    return render(request,"doctor/doctor.html")
+    res=booking.objects.filter(SCHEDULE__DOCTOR__LOGIN_id=request.user.id, status='booked') 
+    dt=doctor.objects.get(LOGIN_id=request.user.id)
+    return render(request,"doctor/doctor.html",{'data':res,'dt':dt})
 
-def doctor_viewbooking_get(request):
-    data=booking.objects.filter(SCHEDULE__DOCTOR__LOGIN_id=request.user.id)
+def doctor_viewbooking_get(request,id):
+    data=booking.objects.filter(SCHEDULE_id=id)
     return render(request,"doctor/viewbooking.html",{'data':data})
 
-def doctor_viewprescription_get(request):
-    data=prescription.objects.filter()
-    return render(request,"doctor/addviewpriscription.html",{'data':data})
+def doctor_viewbooking_get_all(request):
+    data=booking.objects.filter(SCHEDULE__DOCTOR__LOGIN_id=request.user.id)
+    return render(request,"doctor/viewbooking all.html",{'data':data})
+
+# def doctor_viewprescription_get(request,id):
+#     data=prescription.objects.filter(BOOKING_id=id)
+#     return render(request,"doctor/viewprescription.html",{'data':data})
 
 def doctor_viewschedule_get(request):
     data=schedule.objects.filter()
@@ -217,7 +329,8 @@ def doctor_viewschedule_get(request):
 # ================ user ===============================================================================================
 
 def user_home_get(request):
-    return render(request,"user/user.html")
+    us=user.objects.get(LOGIN=request.user.id)
+    return render(request,"user/user.html",{'user':us})
 
 def user_userregister_get(request):
 
@@ -250,6 +363,17 @@ def user_userregister_get(request):
         return redirect('/myapp/login_get/')
     return render(request,"user/userregister.html")
 
+
+def user_book_schedule(request,id):
+    ob=booking()
+    ob.SCHEDULE_id=id
+    ob.USER=user.objects.get(LOGIN=request.user)
+    ob.date=datetime.today()
+    ob.status='booked'
+    ob.save()
+
+    return redirect('/myapp/user_viewbookingsstatus_get/')
+
 def user_viewbookingsstatus_get(request):
     data=booking.objects.filter()
     return render(request,"user/viewbookingsstatus.html",{'data':data})
@@ -258,10 +382,15 @@ def user_viewdoctor_get(request):
     data=doctor.objects.filter()
     return render(request,"user/viewdoctor.html",{'data':data})
 
-def user_viewpriscription_get(request):
-    data=prescription.objects.filter()
-    return render(request,"user/viewpriscription.html",{'data':data})
+def user_viewprescription_get(request):
+    data=prescription.objects.filter(BOOKING__USER__LOGIN__id=request.user.id)
+    return render(request,"user/viewprescription.html",{'data':data})
 
 def user_viewschedule_get(request):
     data=schedule.objects.filter()
     return render(request,"user/viewschedule.html",{'data':data})
+
+def user_viewschedule_get(request,id):
+    data=schedule.objects.filter(DOCTOR_id=id)
+    doc=doctor.objects.get(id=id)
+    return render(request,"user/viewschedule.html",{'data':data,'doctor':doc})
