@@ -256,9 +256,9 @@
 
     <div class="card">
         <div class="patient-badge">
-            <div class="patient-avatar">PT</div>
+            <div class="patient-avatar">{{ booking.USER.name|first|upper }}</div>
             <div class="patient-info">
-                <strong>Patient Name</strong>
+                <strong>{{ booking.USER.name }}</strong>
                 <small>Appointment — Today</small>
             </div>
         </div>
@@ -279,7 +279,7 @@
             <div class="divider"></div>
 
             <div class="form-actions">
-                <button type="button" class="btn-secondary">Cancel</button>
+                <button type="button" onclick="window.location='/myapp/doctor_viewbooking_get_all/'" class="btn-secondary">Cancel</button>
                 <button type="submit" class="btn-submit">Save Prescription</button>
             </div>
         </form>

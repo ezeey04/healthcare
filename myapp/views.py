@@ -270,7 +270,8 @@ from myapp.models import prescription
 # 👉 OPEN ADD FORM
 def doctor_addprescription_get(request, id):
     request.session['booking_id'] = id
-    return render(request, "doctor/addprescription.html")
+    ob=booking.objects.get(id=id)
+    return render(request, "doctor/addprescription.html", {'booking': ob})
 
 
 # 👉 SAVE PRESCRIPTION
@@ -304,17 +305,64 @@ def delete_prescription_get(request, id):
     return redirect(f'/myapp/doctor_viewprescription_get/{booking_id}')
 
 
+
+
 def doctor_home_get(request):
-    res=booking.objects.filter(SCHEDULE__DOCTOR__LOGIN_id=request.user.id, status='booked') 
-    dt=doctor.objects.get(LOGIN_id=request.user.id)
-    return render(request,"doctor/doctor.html",{'data':res,'dt':dt})
+    import datetime
+    # Get current date info
+    today = datetime.date.today()
+    # Calculate the start (Monday) and end (Sunday) of the current week
+    start_of_week = today - datetime.timedelta(days=today.weekday())
+    end_of_week = start_of_week + datetime.timedelta(days=6)
+
+    # Get the logged-in doctor
+    dt = doctor.objects.get(LOGIN_id=request.user.id)
+
+    # 1. Pending Reviews (Count of 'booked' status)
+    pending_reviews = booking.objects.filter(
+        SCHEDULE__DOCTOR=dt, 
+        status='booked'
+    ).count()
+
+    # 2. Today's Appointments Count (Assuming we only count 'accepted' for their schedule)
+    appointments_today = booking.objects.filter(
+        SCHEDULE__DOCTOR=dt, 
+        date=today, 
+        status='accepted'
+    ).count()
+
+    # 3. This Week's Appointments Count
+    this_week_appointments = booking.objects.filter(
+        SCHEDULE__DOCTOR=dt, 
+        date__range=[start_of_week, end_of_week], 
+        status='accepted'
+    ).count()
+
+    # 4. Latest two accepted appointments (upcoming ones)
+    # Using date__gte=today to only show future/current appointments, ordered by closest date/time
+    latest_two_appointments = booking.objects.filter(
+        SCHEDULE__DOCTOR=dt, 
+        status='accepted',
+        date__gte=today
+    ).order_by('date', 'SCHEDULE__from_time')[:2]
+
+    # Package context variables matching your HTML template
+    context = {
+        'dt': dt,
+        'pending_reviews': pending_reviews,
+        'appointments_today': appointments_today,
+        'this_week_appointments': this_week_appointments,
+        'data': latest_two_appointments,
+    }
+
+    return render(request, "doctor/doctor.html", context)
 
 def doctor_viewbooking_get(request,id):
-    data=booking.objects.filter(SCHEDULE_id=id)
+    data=booking.objects.filter(SCHEDULE_id=id,status='accepted')
     return render(request,"doctor/viewbooking.html",{'data':data})
 
 def doctor_viewbooking_get_all(request):
-    data=booking.objects.filter(SCHEDULE__DOCTOR__LOGIN_id=request.user.id)
+    data=booking.objects.filter(SCHEDULE__DOCTOR__LOGIN_id=request.user.id,status='accepted')
     return render(request,"doctor/viewbooking all.html",{'data':data})
 
 # def doctor_viewprescription_get(request,id):
@@ -322,15 +370,52 @@ def doctor_viewbooking_get_all(request):
 #     return render(request,"doctor/viewprescription.html",{'data':data})
 
 def doctor_viewschedule_get(request):
-    data=schedule.objects.filter()
+    data=schedule.objects.filter(DOCTOR__LOGIN_id=request.user.id)
     return render(request,"doctor/viewschedule.html",{'data':data})
 
 
 # ================ user ===============================================================================================
 
+
+
 def user_home_get(request):
-    us=user.objects.get(LOGIN=request.user.id)
-    return render(request,"user/user.html",{'user':us})
+    from django.utils import timezone
+
+    us = user.objects.get(LOGIN_id=request.user.id)
+    
+    today = timezone.now().date()
+    
+    upcoming_count = booking.objects.filter(
+        USER=us, 
+        status='accepted', 
+        SCHEDULE__date__gte=today
+    ).count()
+    
+    pending_count = booking.objects.filter(
+        USER=us, 
+        status='booked'
+    ).count()
+    
+    prescription_count = prescription.objects.filter(
+        BOOKING__USER=us
+    ).count()
+    
+
+    latest_appointments = booking.objects.filter(
+        USER=us, 
+        status='accepted', 
+        SCHEDULE__date__gte=today
+    ).order_by('SCHEDULE__date', 'SCHEDULE__from_time')[:3]
+
+    context = {
+        'user': us,
+        'upcoming_appointments': upcoming_count,
+        'pending_bookings': pending_count,
+        'prescriptions': prescription_count,
+        'data': latest_appointments,
+    }
+    
+    return render(request, "user/user.html", context)
 
 def user_userregister_get(request):
 
@@ -386,11 +471,22 @@ def user_viewprescription_get(request):
     data=prescription.objects.filter(BOOKING__USER__LOGIN__id=request.user.id)
     return render(request,"user/viewprescription.html",{'data':data})
 
-def user_viewschedule_get(request):
-    data=schedule.objects.filter()
-    return render(request,"user/viewschedule.html",{'data':data})
+# def user_viewschedule_get(request):
+#     data=schedule.objects.filter()
+#     return render(request,"user/viewschedule.html",{'data':data})
 
-def user_viewschedule_get(request,id):
-    data=schedule.objects.filter(DOCTOR_id=id)
-    doc=doctor.objects.get(id=id)
-    return render(request,"user/viewschedule.html",{'data':data,'doctor':doc})
+
+
+def user_viewschedule_get(request, id):
+    from datetime import datetime
+
+    data = schedule.objects.filter(DOCTOR_id=id, date__gte=datetime.today())
+    doc = doctor.objects.get(id=id)
+    
+    booked_schedule_ids = booking.objects.filter(USER__LOGIN=request.user).values_list('SCHEDULE_id', flat=True)
+
+    return render(request, "user/viewschedule.html", {
+        'data': data, 
+        'doctor': doc,
+        'booked_schedule_ids': booked_schedule_ids 
+    })

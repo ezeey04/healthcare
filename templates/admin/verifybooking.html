@@ -121,8 +121,6 @@
 <script>document.getElementById('sidebar-root').innerHTML = renderSidebar('verifybooking');</script>
 </body>
 </html -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,6 +134,22 @@
 <link rel="stylesheet" href="/static/shared.css"/>
 
 <style>
+/* Table Alignment Fixes */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f0f0;
+}
+th {
+  font-weight: 600;
+  color: var(--navy, #1a202c);
+  background-color: #f8fafc;
+}
 
 /* Summary Cards */
 .summary-strip {
@@ -170,6 +184,7 @@
   font-size:12px;
   font-weight:600;
   color:var(--muted);
+  margin: 0;
 }
 
 .summary-card span {
@@ -212,7 +227,6 @@
 
 <main class="main">
 
-<!-- Header -->
 <div class="page-header">
   <div>
     <h1>Verify Bookings</h1>
@@ -220,7 +234,6 @@
   </div>
 </div>
 
-<!-- Summary -->
 <div class="summary-strip">
 
   <div class="summary-card">
@@ -228,8 +241,8 @@
       <i class="bi bi-hourglass-split"></i>
     </div>
     <div>
-      <p>Pending</p>
-      <span>{{ pending_count }}</span>
+      <p>Booked</p>
+      <span id="count-booked">{{ pending_count }}</span>
     </div>
   </div>
 
@@ -239,7 +252,7 @@
     </div>
     <div>
       <p>Accepted</p>
-      <span>{{ accepted_count }}</span>
+      <span id="count-accepted">{{ accepted_count }}</span>
     </div>
   </div>
 
@@ -249,13 +262,12 @@
     </div>
     <div>
       <p>Rejected</p>
-      <span>{{ rejected_count }}</span>
+      <span id="count-rejected">{{ rejected_count }}</span>
     </div>
   </div>
 
 </div>
 
-<!-- Table -->
 <div class="card">
 
   <div class="table-wrap">
@@ -272,12 +284,11 @@
         </tr>
       </thead>
 
-      <tbody>
+      <tbody id="bookingTableBody">
 
       {% for i in data %}
-      <tr>
+      <tr class="booking-row">
 
-        <!-- Patient -->
         <td>
           <div style="display:flex;align-items:center">
             <span class="row-avatar"></span>
@@ -285,19 +296,15 @@
           </div>
         </td>
 
-        <!-- Doctor -->
         <td>{{ i.SCHEDULE.DOCTOR.name }}</td>
 
-        <!-- Date -->
         <td>{{ i.SCHEDULE.date }}</td>
 
-        <!-- Time -->
         <td>{{ i.SCHEDULE.from_time }}</td>
         <td>{{ i.SCHEDULE.to_time }}</td>
 
-        <!-- Status -->
         <td>
-          <span class="badge 
+          <span class="badge search-status
             {% if i.status == 'accepted' %}badge-active
             {% elif i.status == 'rejected' %}badge-rejected
             {% else %}badge-pending
@@ -308,7 +315,6 @@
           </span>
         </td>
 
-        <!-- Actions -->
         <td>
           <div class="status-actions">
 
@@ -341,6 +347,44 @@
 <script src="/static/sidebar.js"></script>
 <script>
 document.getElementById('sidebar-root').innerHTML = renderSidebar('verifybooking');
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const tableBody = document.getElementById("bookingTableBody");
+    const rows = tableBody.getElementsByClassName("booking-row");
+    
+    // Counter elements
+    const countBooked = document.getElementById("count-booked");
+    const countAccepted = document.getElementById("count-accepted");
+    const countRejected = document.getElementById("count-rejected");
+
+    function calculateCounts() {
+      let booked = 0;
+      let accepted = 0;
+      let rejected = 0;
+
+      Array.from(rows).forEach(row => {
+        // Extract the text from the status badge inside the row
+        const statusBadge = row.querySelector(".search-status");
+        if (statusBadge) {
+          const rowStatus = statusBadge.textContent.toLowerCase().trim();
+          
+          if (rowStatus === "booked") booked++;
+          if (rowStatus === "accepted") accepted++;
+          if (rowStatus === "rejected") rejected++;
+        }
+      });
+
+      // Update the summary cards on top
+      countBooked.textContent = booked;
+      countAccepted.textContent = accepted;
+      countRejected.textContent = rejected;
+    }
+
+    // Run the calculation immediately on load
+    calculateCounts();
+  });
 </script>
 
 </body>

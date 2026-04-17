@@ -31,7 +31,6 @@
 </body>
 </html> -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +40,25 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
 <link rel="stylesheet" href="/static/shared.css"/>
 <style>
-.time-chip { display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;font-size:12.5px;font-weight:600;background:var(--teal-pale);color:var(--teal); }
+/* Table Alignment Fixes */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f0f0;
+}
+th {
+  font-weight: 600;
+  color: var(--navy, #1a202c);
+  background-color: #f8fafc;
+}
+
+/* Existing Styles */
+.time-chip { display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;font-size:12.5px;font-weight:600;background:var(--teal-pale, #e6f6f5);color:var(--teal, #0d9488); }
 </style>
 </head>
 <body>
@@ -60,30 +77,41 @@
     <div class="table-toolbar">
       <div class="search-box">
         <i class="bi bi-search"></i>
-        <input type="text" placeholder="Search by doctor or date…"/>
+        <input type="text" id="searchInput" placeholder="Search by doctor or date…"/>
       </div>
-      <input type="date" class="form-control" style="width:auto;padding:9px 14px;font-size:13px;"/>
+      <input type="date" id="dateFilter" class="form-control" style="width:auto;padding:9px 14px;font-size:13px;"/>
     </div>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Doctor</th><th>Date</th><th>From</th><th>To</th><th>Actions</th></tr>
-        </thead>
-        <tbody>
-          {% for i in data %}
           <tr>
-            <td><div style="display:flex;align-items:center"><span class="row-avatar"></span><strong>{{ i.DOCTOR.name }}</strong></div></td>
-            <td>{{ i.date }}</td>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleTableBody">
+          {% for i in data %}
+          <tr class="schedule-row">
+            <td>
+              <div style="display:flex;align-items:center">
+                <span class="row-avatar"></span>
+                <strong class="search-doctor">{{ i.DOCTOR.name }}</strong>
+              </div>
+            </td>
+            <td class="search-date">{{ i.date }}</td>
             <td><span class="time-chip"><i class="bi bi-clock"></i>{{ i.from_time }}</span></td>
             <td><span class="time-chip"><i class="bi bi-clock-fill"></i>{{ i.to_time }}</span></td>
-            <!-- <td><span class="badge badge-active">6 slots</span></td> -->
-            <td><div style="display:flex;gap:7px;">
-              <a href="/myapp/admin_editschedule_get/{{ i.id }}" class="action-btn edit"><i class="bi bi-pencil"></i> Edit</a>
-              <a href="/myapp/delete_schedule_get/{{ i.id }}" class="action-btn delete"><i class="bi bi-trash"></i> Delete</a>
-            </div></td>
+            <td>
+              <div style="display:flex;gap:7px;">
+                <a href="/myapp/admin_editschedule_get/{{ i.id }}" class="action-btn edit"><i class="bi bi-pencil"></i> Edit</a>
+                <a href="/myapp/delete_schedule_get/{{ i.id }}" class="action-btn delete"><i class="bi bi-trash"></i> Delete</a>
+              </div>
+            </td>
           </tr> 
           {% endfor %}
-
         </tbody>
       </table>
     </div>
@@ -92,5 +120,54 @@
 </main>
 <script src="/static/sidebar.js"></script>
 <script>document.getElementById('sidebar-root').innerHTML = renderSidebar('viewschedule');</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("searchInput");
+    const dateFilter = document.getElementById("dateFilter");
+    const tableBody = document.getElementById("scheduleTableBody");
+    const rows = tableBody.getElementsByClassName("schedule-row");
+
+    function filterTable() {
+      const searchQuery = searchInput.value.toLowerCase().trim();
+      const selectedDate = dateFilter.value; // Format is YYYY-MM-DD from HTML5 date picker
+
+      Array.from(rows).forEach(row => {
+        const doctorName = row.querySelector(".search-doctor").textContent.toLowerCase();
+        const rowDateText = row.querySelector(".search-date").textContent.trim();
+
+        // 1. Text Search Logic: match doctor name or raw date text
+        const matchesSearch = doctorName.includes(searchQuery) || rowDateText.toLowerCase().includes(searchQuery);
+
+        // 2. Date Picker Filter Logic
+        let matchesDate = true;
+        if (selectedDate) {
+          // Convert both the HTML selected date and the table date to JS Date objects to ensure safe matching
+          const rowDateObj = new Date(rowDateText);
+          const selectedDateObj = new Date(selectedDate);
+          
+          if (!isNaN(rowDateObj) && !isNaN(selectedDateObj)) {
+            // Compare them as YYYY-MM-DD strings
+            matchesDate = rowDateObj.toISOString().split('T')[0] === selectedDateObj.toISOString().split('T')[0];
+          } else {
+            // Fallback just in case parsing fails
+            matchesDate = rowDateText.includes(selectedDate);
+          }
+        }
+
+        // Show row only if it matches both the text search and date filter
+        if (matchesSearch && matchesDate) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    // Trigger filter when user types in search box or changes the date picker
+    searchInput.addEventListener("input", filterTable);
+    dateFilter.addEventListener("change", filterTable);
+  });
+</script>
 </body>
 </html>
