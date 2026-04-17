@@ -1,157 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Edit Doctor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
-<body>
-      <style>
-        .name{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 30px;
-            color:blueviolet;
-        }
-        .phone{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .email{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .gender{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .dob{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .department{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .qualification{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .place{
-            margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .post{
-             margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .pin{
-             margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .district{
-             margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .username{
-             margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .password{
-             margin-left: 50px;
-            margin-right: 1000px;
-            margin-top: 5px;
-            color: blueviolet;
-        }
-        .btn{
-            margin-top: 20px;
-            margin-left: 100px;
-        }
-    </style>
-    <form class="needs-validation" novalidate>
-    <div class="name">
-      <label for="validationTooltip01">Name</label>
-      <input type="text" class="form-control" id="validationTooltip01"required>
-    </div>
-    <div class="phone">
-      <label for="validationTooltip02">Phone</label>
-      <input type="number" class="form-control" id="validationTooltip02"required>
-    </div>
-     <div class="email">
-      <label for="validationTooltip02">Email</label>
-      <input type="number" class="form-control" id="validationTooltip02"required>
-    </div>   
-     <div class="gender">
-      <label for="validationTooltip02">Gender</label>
-      <input type="text" class="form-control" id="validationTooltip02"required>
-    </div>
-     <div class="dob">
-      <label for="validationTooltip02">DOB</label>
-      <input type="date" class="form-control" id="validationTooltip02"required>
-    </div>
-     <div class="department">
-      <label for="validationTooltip02">Department</label>
-      <input type="text" class="form-control" id="validationTooltip02"required>
-    </div>
-     <div class="qualification">
-      <label for="validationTooltip02">Qualification</label>
-      <input type="text" class="form-control" id="validationTooltip02"required>
-    </div>
-     <div class="place">
-      <label for="validationTooltip02">Place</label>
-      <input type="text" class="form-control" id="validationTooltip02"required>
-    </div>
- <div class="post">
-      <label for="validationTooltip02">Post</label>
-      <input type="text" class="form-control" id="validationTooltip02"required>
-    </div>
-       <div class="pin">
-      <label for="validationTooltip02">Pin</label>
-      <input type="number" class="form-control" id="validationTooltip02"required>
-    </div>
-     <div class="district">
-      <label for="validationTooltip02">District</label>
-      <input type="text" class="form-control" id="validationTooltip02"required>
-    </div>
-  <div class="username">
-      <label for="validationTooltipUsername">Username</label>
-      <div class="input-group">
-          <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
-        </div>
-        <input type="text" class="form-control" id="validationTooltipUsername" aria-describedby="validationTooltipUsernamePrepend" required>
-        </div>
-         <div class="password">
-      <label for="validationTooltip02">Password</label>
-      <input type="text" class="form-control" id="validationTooltip02"required>
-    </div>
-  <button class="btn btn-primary" type="submit">Update</button>
-</form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -171,13 +17,17 @@
     </div>
     <a href="/myapp/admin_viewdoctor_get/" class="action-btn back"><i class="bi bi-arrow-left"></i> Back to Doctors</a>
   </div>
-<form method="post"> {% csrf_token %}
+<form method="post" enctype="multipart/form-data"> {% csrf_token %}
 
   <div class="card" style="max-width:800px;">
     <div class="card-header">
       <div style="display:flex;align-items:center;gap:14px;">
-        <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--teal-light),var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;flex-shrink:0;">MN</div>
-        <div><h3></h3><p>Cardiology · ID #DOC-0042</p></div>
+        {% if data.profile_image %}
+        <img src="{{ data.profile_image.url }}" alt="{{ data.name }}" style="width:50px;height:50px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.15);">
+        {% else %}
+        <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--teal-light),var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;flex-shrink:0;">{{ data.name|slice:":2"|upper }}</div>
+        {% endif %}
+        <div><h3>{{ data.name }}</h3><p>{{ data.department }} · ID #DOC-{{ data.id }}</p></div>
       </div>
       <span class="badge badge-active">Active</span>
     </div>
@@ -188,7 +38,7 @@
         <div class="form-group">
           <label>Full Name</label>
           <div class="input-group">
-            <input type="text" class="form-control"  name="name" value="{{ data.name }}"/>
+            <input type="text" class="form-control" name="name" value="{{ data.name }}"/>
             <i class="bi bi-person input-icon"></i>
           </div>
         </div>
@@ -207,33 +57,42 @@
           </div>
         </div>
         <div class="form-group">
-  <label>Date of Birth</label>
-  <div class="input-group">
-    <input type="date" class="form-control" name="dob" 
-           value="{{ data.dob|date:'Y-m-d' }}"/>
-    <i class="bi bi-calendar3 input-icon"></i>
-  </div>
-</div>
-   <div class="form-group">
-  <label>Gender</label>
-  <select class="form-control" name="gender">
-    <option value="Female">Female</option>
-    <option value="Male">Male</option>
-    <option value="Other">Other</option>
-  </select>
-</div>
+          <label>Date of Birth</label>
+          <div class="input-group">
+            <input type="date" class="form-control" name="dob" value="{{ data.dob|date:'Y-m-d' }}"/>
+            <i class="bi bi-calendar3 input-icon"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Gender</label>
+          <select class="form-control" name="gender">
+            <option value="Female" {% if data.gender == 'Female' %}selected{% endif %}>Female</option>
+            <option value="Male" {% if data.gender == 'Male' %}selected{% endif %}>Male</option>
+            <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option>
+          </select>
+        </div>
 
-     <div class="form-group">
-  <label>Department</label>
-  <select class="form-control" name="department">
-        <option>Cardiology</option><option>Orthopaedics</option>
-            <option>Neurology</option><option>Gynaecology</option>
-            <option>Paediatrics</option><option>General Medicine</option>
-  </select>
-</div>
+        <div class="form-group">
+          <label>Department</label>
+          <select class="form-control" name="department">
+            <option {% if data.department == 'Cardiology' %}selected{% endif %}>Cardiology</option><option {% if data.department == 'Orthopaedics' %}selected{% endif %}>Orthopaedics</option>
+            <option {% if data.department == 'Neurology' %}selected{% endif %}>Neurology</option><option {% if data.department == 'Gynaecology' %}selected{% endif %}>Gynaecology</option>
+            <option {% if data.department == 'Paediatrics' %}selected{% endif %}>Paediatrics</option><option {% if data.department == 'General Medicine' %}selected{% endif %}>General Medicine</option>
+          </select>
+        </div>
         <div class="form-group">
           <label>Qualification</label>
           <input type="text" class="form-control" name="qualification" value="{{ data.qualification }}"/>
+        </div>
+        <div class="form-group">
+          <label>Doctor Profile Image</label>
+          <div class="input-group">
+            <input type="file" class="form-control" name="profile_image" accept="image/*"/>
+            <i class="bi bi-image input-icon"></i>
+          </div>
+          {% if data.profile_image %}
+          <div style="margin-top:10px;font-size:12px;color:var(--muted);">Current file: <a href="{{ data.profile_image.url }}" target="_blank">{{ data.profile_image.name|cut:'doctor_profiles/' }}</a></div>
+          {% endif %}
         </div>
       </div>
 
@@ -259,7 +118,7 @@
 
       <div class="form-actions">
         <button class="btn-submit"><i class="bi bi-check2-circle"></i> Update Doctor</button>
-        <a href="view_doctors.html"><button type="button" class="btn-cancel">Cancel</button></a>
+        <a href="/myapp/admin_viewdoctor_get/"><button type="button" class="btn-cancel">Cancel</button></a>
       </div>
     </div>
   </div>

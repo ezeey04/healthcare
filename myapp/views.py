@@ -75,6 +75,7 @@ def admin_adddoctor_get(request):
         district=request.POST['district']
         username=request.POST['username']
         password=request.POST['password']
+        profile_image=request.FILES.get('profile_image')
 
         lg=User.objects.create_user(username=username,password=password)
         lg.groups.add(Group.objects.get(name="doctor"))  
@@ -92,6 +93,7 @@ def admin_adddoctor_get(request):
         ob.post=post
         ob.pin=pin
         ob.district=district
+        ob.profile_image=profile_image
         ob.LOGIN=lg
         ob.save()
         return redirect('/myapp/admin_viewdoctor_get/')
@@ -172,7 +174,8 @@ def admin_editdoctor_get(request,id):
         place=request.POST['place']
         post=request.POST['post']
         pincode=request.POST['pincode']
-        district=request.POST['district']  
+        district=request.POST['district']
+        profile_image=request.FILES.get('profile_image')
          
         ob.name=name
         ob.phone=phone
@@ -185,6 +188,8 @@ def admin_editdoctor_get(request,id):
         ob.post=post
         ob.pin=pincode
         ob.district=district
+        if profile_image:
+            ob.profile_image=profile_image
         ob.save()
 
         return redirect('/myapp/admin_viewdoctor_get/')
@@ -278,6 +283,7 @@ def doctor_addprescription_get(request, id):
 def doctor_addprescription_POST(request):
     prescriptions = request.POST.get('prescription')
     findings = request.POST.get('findings')
+    attachment = request.FILES.get('attachment')
 
     booking_id = request.session.get('booking_id')
 
@@ -286,8 +292,12 @@ def doctor_addprescription_POST(request):
     ob.prescription = prescriptions
     ob.findings = findings
     ob.date=datetime.today()
+    ob.attachment = attachment
     ob.save()
 
+
+    ob.BOOKING.status = 'completed'
+    ob.BOOKING.save()
     return redirect(f'/myapp/doctor_viewbooking_get/{booking_id}/')
 
 
@@ -460,11 +470,18 @@ def user_book_schedule(request,id):
     return redirect('/myapp/user_viewbookingsstatus_get/')
 
 def user_viewbookingsstatus_get(request):
-    data=booking.objects.filter()
-    return render(request,"user/viewbookingsstatus.html",{'data':data})
+    us = user.objects.get(LOGIN_id=request.user.id)
+    data = booking.objects.filter(USER=us).select_related('SCHEDULE__DOCTOR').order_by('-date', '-id')
+    context = {
+        'data': data,
+        'pending_count': data.filter(status='booked').count(),
+        'confirmed_count': data.filter(status='accepted').count(),
+        'rejected_count': data.filter(status='rejected').count(),
+    }
+    return render(request,"user/viewbookingsstatus.html", context)
 
 def user_viewdoctor_get(request):
-    data=doctor.objects.filter()
+    data=doctor.objects.all()
     return render(request,"user/viewdoctor.html",{'data':data})
 
 def user_viewprescription_get(request):
@@ -484,7 +501,7 @@ def user_viewschedule_get(request, id):
     doc = doctor.objects.get(id=id)
     
     booked_schedule_ids = booking.objects.filter(USER__LOGIN=request.user).values_list('SCHEDULE_id', flat=True)
-
+    print(data)
     return render(request, "user/viewschedule.html", {
         'data': data, 
         'doctor': doc,

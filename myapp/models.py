@@ -14,6 +14,7 @@ class doctor(models.Model):
     post=models.CharField(max_length=200)
     pin=models.BigIntegerField()
     district=models.CharField(max_length=200)
+    profile_image=models.FileField(upload_to='doctor_profiles/', blank=True, null=True)
     LOGIN=models.ForeignKey(User,on_delete=models.CASCADE)
 
 class schedule(models.Model):
@@ -44,6 +45,7 @@ class prescription(models.Model):
     date=models.DateField()
     prescription=models.CharField(max_length=200)
     findings=models.CharField(max_length=200)
+    attachment=models.FileField(upload_to='prescriptions/', blank=True, null=True)
 
 class complaint(models.Model):
     USER=models.ForeignKey(user,on_delete=models.CASCADE)

@@ -65,6 +65,11 @@ th {
 .summary-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
 .summary-card p { font-size:11.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin: 0; }
 .summary-card span { font-size:24px; font-weight:700; color:var(--navy); font-family:'Playfair Display',serif; }
+.doctor-cell { display:flex; align-items:center; gap:10px; }
+.doctor-avatar,
+.doctor-avatar-img { width:38px; height:38px; border-radius:50%; flex-shrink:0; }
+.doctor-avatar { display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:700; background:linear-gradient(135deg,var(--teal-light),var(--teal)); }
+.doctor-avatar-img { object-fit:cover; border:1px solid var(--border); }
 .doc-info { display:flex; flex-direction:column; }
 .doc-info strong { font-size:13.5px; font-weight:600; color:var(--navy); }
 .doc-info span { font-size:12px; color:var(--muted); }
@@ -132,13 +137,26 @@ th {
               </div>
             </td>
             <td>
-              <div class="doc-info">
-                <strong>{{ i.SCHEDULE.DOCTOR.name }}</strong>
-                <span>{{ i.SCHEDULE.DOCTOR.department|slice:":1" }}</span>
+              <div class="doctor-cell">
+                {% if i.SCHEDULE.DOCTOR.profile_image %}
+                <img src="{{ i.SCHEDULE.DOCTOR.profile_image.url }}" alt="{{ i.SCHEDULE.DOCTOR.name }}" class="doctor-avatar-img">
+                {% else %}
+                <div class="doctor-avatar">{{ i.SCHEDULE.DOCTOR.name|slice:":2"|upper }}</div>
+                {% endif %}
+                <div class="doc-info">
+                  <strong>{{ i.SCHEDULE.DOCTOR.name }}</strong>
+                  <span>{{ i.SCHEDULE.DOCTOR.department }}</span>
+                </div>
               </div>
             </td>
             <td><span class="badge badge-active search-status">{{ i.status }}</span></td>
-            <td><a href="/myapp/user_viewprescription_get/" class="action-btn rx"><i class="bi bi-capsule-pill"></i> View Rx</a></td>
+            <td>
+              {% if i.status|lower == 'completed' %}
+              <a href="/myapp/user_viewprescription_get/" class="action-btn rx"><i class="bi bi-capsule-pill"></i> View Rx</a>
+              {% else %}
+              <span style="font-size:12px;color:var(--muted);">Pending</span>
+              {% endif %}
+            </td>
           </tr>
           {% endfor %}
         </tbody>

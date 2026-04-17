@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
 <link rel="stylesheet" href="/static/user_shared.css"/>
 <style>
-/* Table Alignment Fixes */
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: 14px 16px; text-align: left; vertical-align: middle; border-bottom: 1px solid #f0f0f0; }
 th { font-weight: 600; color: var(--navy, #1a202c); background-color: #f8fafc; }
@@ -21,22 +20,21 @@ th { font-weight: 600; color: var(--navy, #1a202c); background-color: #f8fafc; }
   position: relative; overflow: hidden;
 }
 .doctor-banner::after { content:''; position:absolute; right:-30px; top:-30px; width:160px; height:160px; border-radius:50%; background:rgba(10,124,110,.12); }
-.db-avatar { width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,var(--teal-light),var(--teal)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:20px; font-weight:700; flex-shrink:0; position:relative; z-index:1; }
+.db-avatar,
+.db-avatar-img { width:60px; height:60px; border-radius:50%; flex-shrink:0; position:relative; z-index:1; }
+.db-avatar { background:linear-gradient(135deg,var(--teal-light),var(--teal)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:20px; font-weight:700; }
+.db-avatar-img { object-fit:cover; border:2px solid rgba(255,255,255,.18); }
 .db-info { position:relative; z-index:1; }
 .db-info h2 { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:#fff; margin-bottom:4px; }
-.db-info span { font-size:12.5px; color:rgba(255,255,255,.45); }
+.db-info span { font-size:12.5px; color:rgba(255,255,255,.55); }
 .db-tag { margin-left:auto; position:relative; z-index:1; }
 .db-tag .dept-chip { background:rgba(255,255,255,.1); color:rgba(255,255,255,.8); border:1px solid rgba(255,255,255,.15); padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; }
 
-.slots-avail { font-size:12px; color:var(--muted); margin-top:3px; }
-.slot-count { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:20px; font-size:11.5px; font-weight:600; background:var(--teal-pale); color:var(--teal); }
-
-/* Disabled/Booked Button Style */
 .action-btn.disabled {
   background: #f1f5f9;
   color: #94a3b8;
   border: 1px solid #e2e8f0;
-  pointer-events: none; /* Prevents clicking */
+  pointer-events: none;
   cursor: not-allowed;
 }
 </style>
@@ -54,10 +52,14 @@ th { font-weight: 600; color: var(--navy, #1a202c); background-color: #f8fafc; }
   </div>
 
   <div class="doctor-banner">
+    {% if doctor.profile_image %}
+    <img src="{{ doctor.profile_image.url }}" alt="{{ doctor.name }}" class="db-avatar-img">
+    {% else %}
     <div class="db-avatar">{{ doctor.name|slice:":2"|upper }}</div>
+    {% endif %}
     <div class="db-info">
       <h2>{{ doctor.name }}</h2>
-      <span>{{ doctor.degree }}</span>
+      <span>{{ doctor.qualification }}</span>
     </div>
     <div class="db-tag"><div class="dept-chip"><i class="bi bi-heart-pulse"></i> &nbsp;{{ doctor.department }}</div></div>
   </div>
@@ -82,10 +84,9 @@ th { font-weight: 600; color: var(--navy, #1a202c); background-color: #f8fafc; }
           {% for i in data %}
           <tr>
             <td class="si-no">{{ forloop.counter }}</td>
-            <td><strong>{{ i.date }}</strong><br><span style="font-size:11.5px;color:var(--muted);">{{ i.day }}</span></td>
+            <td><strong>{{ i.date }}</strong></td>
             <td><span class="time-chip"><i class="bi bi-clock"></i> {{ i.from_time }}</span></td>
             <td><span class="time-chip"><i class="bi bi-clock-fill"></i> {{ i.to_time }}</span></td>
-            
             <td>
               {% if i.id in booked_schedule_ids %}
                 <span class="action-btn disabled"><i class="bi bi-check2-circle"></i> Already Booked</span>
@@ -93,7 +94,6 @@ th { font-weight: 600; color: var(--navy, #1a202c); background-color: #f8fafc; }
                 <a href="/myapp/user_book_schedule/{{ i.id }}" class="action-btn book"><i class="bi bi-calendar-plus"></i> Book</a>
               {% endif %}
             </td>
-            
           </tr>
           {% endfor %}
         </tbody>

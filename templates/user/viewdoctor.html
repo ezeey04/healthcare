@@ -1,40 +1,3 @@
-<!--DOCTYPE html>
-<html lang="en">
-<head>
-    <title>View Doctor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
-<body>
-  <form method="post"> {% csrf_token %}
-
-      <div class="bd-example-snippet bd-code-snippet"> <div class="bd-example m-0 border-0"> <table class="table table-bordered border-primary">
-  <thead>
-    <tr>
-      <th scope="col">Si No</th>
-      <th scope="col">Doctor Details</th>
-      <th scope="col">Address</th>
-      <th scope="col">Contact Details</th>
-      <th scope="col">Department</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td><a href="/myapp/user_viewschedule_get/">Schedules</a> </td>
-    </tr>
-  </tbody>
-</table> 
-</div>
-</form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
-</html-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +7,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
 <link rel="stylesheet" href="/static/user_shared.css"/>
 <style>
-/* Table Alignment Fixes */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -53,24 +15,21 @@ th, td {
   padding: 14px 16px;
   text-align: left;
   vertical-align: middle;
-  border-bottom: 1px solid #f0f0f0; /* Soft border for separation */
+  border-bottom: 1px solid #f0f0f0;
 }
 th {
   font-weight: 600;
   color: var(--navy, #1a202c);
-  background-color: #f8fafc; /* Optional: light background for headers */
+  background-color: #f8fafc;
 }
-
-/* Existing Styles */
 .dept-chip { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11.5px; font-weight:600; background:var(--teal-pale, #e6f6f5); color:var(--teal, #0d9488); }
-.doctor-cell { display:flex; align-items:center; gap:10px; }
-.doc-avatar { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--teal-light, #2dd4bf),var(--teal, #0f766e)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; flex-shrink:0; }
+.doctor-cell { display:flex; align-items:center; gap:12px; }
+.doc-avatar,
+.doc-avatar-img { width:44px; height:44px; border-radius:50%; flex-shrink:0; }
+.doc-avatar { background:linear-gradient(135deg,var(--teal-light, #2dd4bf),var(--teal, #0f766e)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; }
+.doc-avatar-img { object-fit:cover; border:1px solid var(--border); }
 .doc-name strong { font-size:13.5px; font-weight:600; color:var(--navy, #1e293b); display:block; }
 .doc-name span { font-size:12px; color:var(--muted, #64748b); }
-.addr-cell { font-size:13px; color:var(--muted, #64748b); max-width:180px; }
-.contact-cell { font-size:13px; }
-.contact-cell p { color:var(--navy, #1e293b); font-weight:500; margin: 0; }
-.contact-cell span { color:var(--muted, #64748b); font-size:12px; }
 </style>
 </head>
 <body>
@@ -88,13 +47,13 @@ th {
     <div class="table-toolbar">
       <div class="search-box">
         <i class="bi bi-search"></i>
-        <input type="text" id="searchInput" placeholder="Search by name or department…"/>
+        <input type="text" id="searchInput" placeholder="Search by name or department..."/>
       </div>
       <select id="deptFilter" class="form-control" style="width:auto;padding:9px 34px 9px 12px;font-size:13px;">
         <option value="" disabled selected>Select department</option>
-            <option>Cardiology</option><option>Orthopaedics</option>
-            <option>Neurology</option><option>Gynaecology</option>
-            <option>Paediatrics</option><option>General Medicine</option>
+        <option>Cardiology</option><option>Orthopaedics</option>
+        <option>Neurology</option><option>Gynaecology</option>
+        <option>Paediatrics</option><option>General Medicine</option>
       </select>
     </div>
     <div class="table-wrap">
@@ -113,10 +72,14 @@ th {
             <td class="si-no">{{ forloop.counter }}</td>
             <td>
               <div class="doctor-cell">
-                <div class="doc-avatar">MN</div>
+                {% if i.profile_image %}
+                <img src="{{ i.profile_image.url }}" alt="{{ i.name }}" class="doc-avatar-img">
+                {% else %}
+                <div class="doc-avatar">{{ i.name|slice:":2"|upper }}</div>
+                {% endif %}
                 <div class="doc-name">
                   <strong class="search-name">{{ i.name }}</strong>
-                  <span>{{ i.degree }}</span>
+                  <span>{{ i.qualification }}</span>
                 </div>
               </div>
             </td>
@@ -144,18 +107,12 @@ th {
       const searchQuery = searchInput.value.toLowerCase().trim();
       const selectedDept = deptFilter.value.toLowerCase();
 
-      // Loop through all table rows
       Array.from(rows).forEach(row => {
         const docName = row.querySelector(".search-name").textContent.toLowerCase();
         const docDept = row.querySelector(".search-dept").textContent.toLowerCase();
-
-        // Check if row matches text search (name OR department)
         const matchesSearch = docName.includes(searchQuery) || docDept.includes(searchQuery);
-        
-        // Check if row matches dropdown filter
-        const matchesDropdown = selectedDept === "all" || docDept === selectedDept;
+        const matchesDropdown = selectedDept === "" || selectedDept === "all" || docDept === selectedDept;
 
-        // Show row if it matches both conditions, otherwise hide
         if (matchesSearch && matchesDropdown) {
           row.style.display = "";
         } else {
@@ -164,7 +121,6 @@ th {
       });
     }
 
-    // Attach event listeners to trigger filter on typing or dropdown change
     searchInput.addEventListener("input", filterTable);
     deptFilter.addEventListener("change", filterTable);
   });

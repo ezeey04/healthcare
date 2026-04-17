@@ -206,6 +206,11 @@
             justify-content: flex-end;
             margin-top: 0.5rem;
         }
+        .file-hint {
+            margin-top: 0.45rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
         .patient-badge {
             background: var(--accent-light);
             border: 1px solid rgba(23,165,137,0.2);
@@ -263,7 +268,7 @@
             </div>
         </div>
 
-        <form method="post" action="/myapp/doctor_addprescription_POST/">
+        <form method="post" action="/myapp/doctor_addprescription_POST/" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="form-group">
@@ -274,6 +279,12 @@
             <div class="form-group">
                 <label class="form-label" for="findings">Clinical Findings</label>
                 <textarea class="form-control" name="findings" id="findings" placeholder="Record your observations and examination findings..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="attachment">Prescription File</label>
+                <input class="form-control" type="file" name="attachment" id="attachment" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                <div class="file-hint">Upload a scanned prescription, report, or supporting document if needed.</div>
             </div>
 
             <div class="divider"></div>
